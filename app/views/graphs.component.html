@@ -1,0 +1,13 @@
+<div>
+  <h2>My Graphs</h2>
+  <ul class="graphs">
+    <li *ngFor="#graph of graphs"
+      [class.selected]="hero === selectedHero" 
+      (click)="onSelect(graph)">
+      <span class="badge">{{graph.id}}</span> {{graph.name}}
+    </li>
+  </ul>
+  <div *ngIf="selectedGraph">
+    <h2>{{selectedGraph.name | uppercase}} is my graph</h2>
+  </div>
+</div>
