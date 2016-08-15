@@ -3,19 +3,23 @@ import { Router } from 'angular2/router';
 
 import { Graph } from './models/graph';
 import { GraphService } from './services/graph.service';
+import {UserService} from "./services/user.service";
 
 @Component({
   selector: 'my-dashboard',
   templateUrl: 'app/views/dashboard.component.html',
   styleUrls: ['app/assets/css/dashboard.component.css']
 })
+
+
 export class DashboardComponent implements OnInit {
 
   graphs: Graph[] = [];
 
   constructor(
-    private _router: Router,
-    private _graphService: GraphService) {
+    protected _router: Router,
+    protected _graphService: GraphService,
+    protected _userService: UserService) {
   }
 
   ngOnInit() {
@@ -24,7 +28,7 @@ export class DashboardComponent implements OnInit {
   }
 
   gotoDetail(graph: Graph) {
-    let link = ['HeroDetail', { id: graph.id }];
+    let link = ['GraphDetail', { id: graph.id }];
     this._router.navigate(link);
   }
 }

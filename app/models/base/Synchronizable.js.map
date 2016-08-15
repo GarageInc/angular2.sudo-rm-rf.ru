@@ -1,0 +1,1 @@
+{"version":3,"file":"Synchronizable.js","sourceRoot":"","sources":["Synchronizable.ts"],"names":[],"mappings":";;;;;;;YACA;gBAAA;gBAOA,CAAC;gBALG,qCAAY,GAAZ,UAAa,OAAa;oBACtB,GAAG,CAAC,CAAC,IAAI,QAAQ,IAAI,OAAO,CAAC,CAAC,CAAC;wBAC3B,IAAI,CAAC,QAAQ,CAAC,GAAG,OAAO,CAAC,QAAQ,CAAC,CAAA;oBACtC,CAAC;gBACL,CAAC;gBACL,qBAAC;YAAD,CAAC,AAPD,IAOC;YAPD,2CAOC,CAAA"}

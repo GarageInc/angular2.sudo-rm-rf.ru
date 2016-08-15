@@ -1,10 +1,6 @@
-export class Graph {
-  id: number;
-  name: string;
+import {Synchronizable} from "./base/Synchronizable";
 
-  fillFromJSON(jsonObj: JSON) {
-    for (var propName in jsonObj) {
-      this[propName] = jsonObj[propName]
-    }
-  }
+export class Graph extends Synchronizable {
+  id: number;
+  graphname: string;
 }

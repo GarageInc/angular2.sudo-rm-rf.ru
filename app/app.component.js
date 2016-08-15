@@ -1,16 +1,16 @@
-System.register(['angular2/core', 'angular2/router', './dashboard.component', './components/graphs/graphs.component', './components/graphs/graph-detail.component', "./services/graph.service", './components/identity/login.component', './components/identity/profile.component'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', './dashboard.component', './components/graphs/graphs.component', './components/graphs/graph-detail.component', "./services/graph.service", "./services/user.service", './components/user/login.component', './components/user/profile.component', "./protected-directive"], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
-        switch (arguments.length) {
-            case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
-            case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
-            case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
-        }
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, dashboard_component_1, graphs_component_1, graph_detail_component_1, graph_service_1, login_component_1, profile_component_1;
+    var core_1, router_1, dashboard_component_1, graphs_component_1, graph_detail_component_1, graph_service_1, user_service_1, login_component_1, profile_component_1, protected_directive_1;
     var AppComponent;
     return {
         setters:[
@@ -32,11 +32,17 @@ System.register(['angular2/core', 'angular2/router', './dashboard.component', '.
             function (graph_service_1_1) {
                 graph_service_1 = graph_service_1_1;
             },
+            function (user_service_1_1) {
+                user_service_1 = user_service_1_1;
+            },
             function (login_component_1_1) {
                 login_component_1 = login_component_1_1;
             },
             function (profile_component_1_1) {
                 profile_component_1 = profile_component_1_1;
+            },
+            function (protected_directive_1_1) {
+                protected_directive_1 = protected_directive_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
@@ -49,10 +55,12 @@ System.register(['angular2/core', 'angular2/router', './dashboard.component', '.
                         templateUrl: 'app/views/app/app.component.html',
                         styleUrls: ['app/assets/css/app.component.css'],
                         directives: [
-                            router_1.ROUTER_DIRECTIVES
+                            router_1.ROUTER_DIRECTIVES,
+                            protected_directive_1.ProtectedDirective,
                         ],
                         providers: [
                             router_1.ROUTER_PROVIDERS,
+                            user_service_1.UserService,
                             graph_service_1.GraphService
                         ]
                     }),
@@ -75,18 +83,19 @@ System.register(['angular2/core', 'angular2/router', './dashboard.component', '.
                         },
                         {
                             path: '/login',
-                            component: login_component_1.LoginComponent,
-                            name: 'Login' },
+                            name: 'Login',
+                            component: login_component_1.LoginComponent
+                        },
                         {
                             path: '/profile',
-                            component: profile_component_1.ProfileComponent,
-                            name: 'Profile'
+                            name: 'Profile',
+                            component: profile_component_1.ProfileComponent
                         }
                     ]), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
                 return AppComponent;
-            })();
+            }());
             exports_1("AppComponent", AppComponent);
         }
     }

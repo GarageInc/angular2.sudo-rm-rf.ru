@@ -7,22 +7,22 @@ System.register(["./base/Synchronizable"], function(exports_1, context_1) {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     var Synchronizable_1;
-    var Graph;
+    var User;
     return {
         setters:[
             function (Synchronizable_1_1) {
                 Synchronizable_1 = Synchronizable_1_1;
             }],
         execute: function() {
-            Graph = (function (_super) {
-                __extends(Graph, _super);
-                function Graph() {
+            User = (function (_super) {
+                __extends(User, _super);
+                function User() {
                     _super.apply(this, arguments);
                 }
-                return Graph;
+                return User;
             }(Synchronizable_1.Synchronizable));
-            exports_1("Graph", Graph);
+            exports_1("User", User);
         }
     }
 });
-//# sourceMappingURL=graph.js.map
+//# sourceMappingURL=user.js.map

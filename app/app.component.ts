@@ -5,19 +5,25 @@ import { DashboardComponent } from './dashboard.component';
 import { GraphsComponent } from './components/graphs/graphs.component';
 import { GraphDetailComponent } from './components/graphs/graph-detail.component';
 import {GraphService} from "./services/graph.service";
-
-import { LoginComponent } from './components/identity/login.component';
-import { ProfileComponent } from './components/identity/profile.component';
+import {UserService} from "./services/user.service";
+//
+import { LoggedInRouterOutlet } from "./logged-in-router-outlet";
+import { LoginComponent } from './components/user/login.component';
+import { ProfileComponent } from './components/user/profile.component';
+import {ProtectedDirective} from "./protected-directive";
 
 @Component({
   selector: 'my-app',
   templateUrl: 'app/views/app/app.component.html',
   styleUrls: ['app/assets/css/app.component.css'],
   directives: [
-      ROUTER_DIRECTIVES
+      ROUTER_DIRECTIVES,
+      ProtectedDirective,
+      // LoggedInRouterOutlet
   ],
   providers: [
     ROUTER_PROVIDERS,
+    UserService,
     GraphService
   ]
 })
@@ -41,13 +47,14 @@ import { ProfileComponent } from './components/identity/profile.component';
     },
 
     {
-        path: '/login',
-        component: LoginComponent,
-        name: 'Login' },
+       path: '/login',
+        name: 'Login',
+       component: LoginComponent
+    },
     {
-        path: '/profile',
-        component: ProfileComponent,
-        name: 'Profile'
+       path: '/profile',
+        name: 'Profile',
+       component: ProfileComponent
     }
 ])
 
