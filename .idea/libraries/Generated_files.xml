@@ -1,0 +1,45 @@
+<component name="libraryTable">
+  <library name="Generated files" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/app/models/user.js" />
+        <item url="file://$PROJECT_DIR$/app/models/graph.js" />
+        <item url="file://$PROJECT_DIR$/app/app-injector.js" />
+        <item url="file://$PROJECT_DIR$/app/services/graph.service.js" />
+        <item url="file://$PROJECT_DIR$/app/components/graphs/graphs.component.js" />
+        <item url="file://$PROJECT_DIR$/app/services/user.service.js" />
+        <item url="file://$PROJECT_DIR$/app/logged-in-router-outlet.js" />
+        <item url="file://$PROJECT_DIR$/app/services/base/base.service.js" />
+        <item url="file://$PROJECT_DIR$/app/app.component.js" />
+        <item url="file://$PROJECT_DIR$/app/components/user/profile.component.js" />
+        <item url="file://$PROJECT_DIR$/app/components/user/login.component.js" />
+        <item url="file://$PROJECT_DIR$/app/app.js" />
+        <item url="file://$PROJECT_DIR$/app/dashboard.component.js" />
+        <item url="file://$PROJECT_DIR$/app/mocks/mock-graphs.js" />
+        <item url="file://$PROJECT_DIR$/app/models/base/Synchronizable.js" />
+        <item url="file://$PROJECT_DIR$/app/protected-directive.js" />
+        <item url="file://$PROJECT_DIR$/app/components/graphs/graph-detail.component.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/models/user.js" />
+      <root url="file://$PROJECT_DIR$/app/models/graph.js" />
+      <root url="file://$PROJECT_DIR$/app/app-injector.js" />
+      <root url="file://$PROJECT_DIR$/app/services/graph.service.js" />
+      <root url="file://$PROJECT_DIR$/app/components/graphs/graphs.component.js" />
+      <root url="file://$PROJECT_DIR$/app/services/user.service.js" />
+      <root url="file://$PROJECT_DIR$/app/logged-in-router-outlet.js" />
+      <root url="file://$PROJECT_DIR$/app/services/base/base.service.js" />
+      <root url="file://$PROJECT_DIR$/app/app.component.js" />
+      <root url="file://$PROJECT_DIR$/app/components/user/profile.component.js" />
+      <root url="file://$PROJECT_DIR$/app/components/user/login.component.js" />
+      <root url="file://$PROJECT_DIR$/app/app.js" />
+      <root url="file://$PROJECT_DIR$/app/dashboard.component.js" />
+      <root url="file://$PROJECT_DIR$/app/mocks/mock-graphs.js" />
+      <root url="file://$PROJECT_DIR$/app/models/base/Synchronizable.js" />
+      <root url="file://$PROJECT_DIR$/app/protected-directive.js" />
+      <root url="file://$PROJECT_DIR$/app/components/graphs/graph-detail.component.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>

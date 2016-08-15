@@ -1,0 +1,15 @@
+<div>
+  <h2>Login or register on one click!</h2>
+  <div>
+    <label>Login:</label>
+    <input type="text" [(ngModel)]="username"/>
+
+    <label>Password:</label>
+    <input type="text" type="password" [(ngModel)]="password"/>
+
+    <label>Remember Me:</label>
+    <input type="checkbox" [(ngModel)]="rememberme"/>
+
+    <button (click)="onLogin()">Гогого!</button>
+  </div>
+</div>
