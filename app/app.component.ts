@@ -2,22 +2,22 @@ import { Component } from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
 
 import { DashboardComponent } from './dashboard.component';
-import { HeroesComponent } from './heroes.component';
-import { GraphsComponent } from './graphs.component';
-import { HeroDetailComponent } from './hero-detail.component';
-import { HeroService } from './services/hero.service';
+import { GraphsComponent } from './components/graphs/graphs.component';
+import { GraphDetailComponent } from './components/graphs/graph-detail.component';
 import {GraphService} from "./services/graph.service";
+
+import { LoginComponent } from './components/identity/login.component';
+import { ProfileComponent } from './components/identity/profile.component';
 
 @Component({
   selector: 'my-app',
-  templateUrl: './app/views/app.component.html',
-  styleUrls: ['/app/assets/css/app.component.css'],
+  templateUrl: 'app/views/app/app.component.html',
+  styleUrls: ['app/assets/css/app.component.css'],
   directives: [
       ROUTER_DIRECTIVES
   ],
   providers: [
     ROUTER_PROVIDERS,
-    HeroService,
     GraphService
   ]
 })
@@ -31,21 +31,26 @@ import {GraphService} from "./services/graph.service";
     },
     {
         path: '/detail/:id',
-        name: 'HeroDetail',
-        component: HeroDetailComponent
-    },
-    {
-        path: '/heroes',
-        name: 'Heroes',
-        component: HeroesComponent
+        name: 'GraphDetail',
+        component: GraphDetailComponent
     },
     {
         path: '/graphs',
         name: 'Graphs',
         component: GraphsComponent
+    },
+
+    {
+        path: '/login',
+        component: LoginComponent,
+        name: 'Login' },
+    {
+        path: '/profile',
+        component: ProfileComponent,
+        name: 'Profile'
     }
 ])
 
 export class AppComponent {
-  title = 'Tour of Heroes';
+  title = 'Test App';
 }

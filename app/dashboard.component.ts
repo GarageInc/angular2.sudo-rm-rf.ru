@@ -1,30 +1,30 @@
 import { Component, OnInit } from 'angular2/core';
 import { Router } from 'angular2/router';
 
-import { Hero } from './models/hero';
-import { HeroService } from './services/hero.service';
+import { Graph } from './models/graph';
+import { GraphService } from './services/graph.service';
 
 @Component({
   selector: 'my-dashboard',
-  templateUrl: '/app/views/dashboard.component.html',
-  styleUrls: ['./app/assets/css/dashboard.component.css']
+  templateUrl: 'app/views/dashboard.component.html',
+  styleUrls: ['app/assets/css/dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
 
-  heroes: Hero[] = [];
+  graphs: Graph[] = [];
 
   constructor(
     private _router: Router,
-    private _heroService: HeroService) {
+    private _graphService: GraphService) {
   }
 
   ngOnInit() {
-    this._heroService.getHeroes()
-      .then(heroes => this.heroes = heroes.slice(1,5));
+    this._graphService.getGraphs()
+      .then(graphs => this.graphs = graphs.slice(1,5));
   }
 
-  gotoDetail(hero: Hero) {
-    let link = ['HeroDetail', { id: hero.id }];
+  gotoDetail(graph: Graph) {
+    let link = ['HeroDetail', { id: graph.id }];
     this._router.navigate(link);
   }
 }

@@ -1,6 +1,4 @@
-System.register([], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
+System.register([], function(exports_1) {
     var Graph;
     return {
         setters:[],
@@ -8,8 +6,13 @@ System.register([], function(exports_1, context_1) {
             Graph = (function () {
                 function Graph() {
                 }
+                Graph.prototype.fillFromJSON = function (jsonObj) {
+                    for (var propName in jsonObj) {
+                        this[propName] = jsonObj[propName];
+                    }
+                };
                 return Graph;
-            }());
+            })();
             exports_1("Graph", Graph);
         }
     }
