@@ -11,7 +11,7 @@ import 'rxjs/Rx';
 export class BaseService {
 
     protected static GATEWAY_GRAPHS:string = "http://127.0.0.1:3000/index.php/graph/index";
-    protected static GATEWAY_USER_LOGIN:string = "http://127.0.0.1:3000/index.php/site/login";
+    protected static GATEWAY_USER_LOGIN:string = "http://php.sudo-rm-rf.ru/web/index.php/site/login";
 
     constructor (protected http: Http) {}
 

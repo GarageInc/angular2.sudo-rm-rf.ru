@@ -9,6 +9,7 @@ import 'rxjs/Rx';
 import { GRAPHS } from '../mocks/mock-graphs';
 import {BaseService} from "./base/base.service";
 import {User} from "../models/user";
+import {BaseException} from "../../node_modules/angular2/src/facade/exceptions";
 
 @Injectable()
 export class UserService extends BaseService{
@@ -20,17 +21,23 @@ export class UserService extends BaseService{
         this.is_logged_in = !!localStorage.getItem('token');
     }
 
-    public login(username:string, password:string, rememberme: Boolean) {
+    public login(username:string, password:string, rememberMe: Boolean) {
         let headers = new Headers();
 
-        headers.append('Access-Control-Allow-Origin', '*');
+        rememberMe = !!rememberMe
 
-        console.log(headers)
+        headers.set('Content-Type', 'application/x-www-form-urlencoded');
+        headers.set('Accept','text/xml');
+
+        var body = 'username=' + encodeURIComponent(username) +
+            '&password=' + encodeURIComponent(password) + '&rememberMe='+encodeURIComponent(rememberMe?"true":"false");
+
+        this.makeCorsRequest(body);
 
         return this.http
             .post(
                 BaseService.GATEWAY_USER_LOGIN,
-                JSON.stringify({ username, password, rememberme }),
+                body,
                 {
                     headers
                 }
@@ -63,5 +70,46 @@ export class UserService extends BaseService{
         user.fillFromJSON( body)
 
         return user;
+    }
+
+
+    getTitle(text:string) {
+        return text.match('<title>(.*)?</title>')[1];
+    }
+
+    makeCorsRequest(body:string) {
+        // bibliographica.org supports CORS.
+        var url = BaseService.GATEWAY_USER_LOGIN;
+
+        var xhr = new XMLHttpRequest();
+
+        //
+        //xhr.withCredentials = true;
+
+        if ("withCredentials" in xhr) {
+            // XHR for Chrome/Safari/Firefox.
+            xhr.open("POST", url, true);
+        } else {
+            // CORS not supported.
+            xhr = null;
+        }
+
+        if (!xhr) {
+            alert('CORS not supported');
+            return;
+        }
+
+        // Response handlers.
+        xhr.onload = function() {
+            var text = xhr.responseText;
+            var title = this.getTitle(text);
+            alert('Response from CORS request to ' + url + ': ' + title);
+        };
+
+        xhr.onerror = function() {
+            alert('Woops, there was an error making the request.');
+        };
+
+        xhr.send(body);
     }
 }
