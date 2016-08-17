@@ -1,16 +1,16 @@
-System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', "./base/base.service", "../models/user"], function(exports_1) {
+System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', "./base/base.service", "../models/user"], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __extends = (this && this.__extends) || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
-        switch (arguments.length) {
-            case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
-            case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
-            case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
-        }
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
@@ -43,17 +43,12 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', "./base/base.servi
                 }
                 UserService.prototype.login = function (username, password, rememberMe) {
                     var _this = this;
-                    var headers = new http_1.Headers();
                     rememberMe = !!rememberMe;
-                    headers.set('Content-Type', 'application/x-www-form-urlencoded');
-                    headers.set('Accept', 'text/xml');
-                    var body = 'username=' + encodeURIComponent(username) +
-                        '&password=' + encodeURIComponent(password) + '&rememberMe=' + encodeURIComponent(rememberMe ? "true" : "false");
-                    this.makeCorsRequest(body);
-                    return this.http
-                        .post(base_service_1.BaseService.GATEWAY_USER_LOGIN, body, {
-                        headers: headers
-                    })
+                    var params = {};
+                    params["password"] = password;
+                    params["username"] = username;
+                    params["rememberMe"] = rememberMe;
+                    return this.post(base_service_1.BaseService.GATEWAY_USER_LOGIN, params)
                         .map(function (res) { return res.json(); })
                         .map(function (res) {
                         if (res.success) {
@@ -113,7 +108,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', "./base/base.servi
                     __metadata('design:paramtypes', [http_1.Http])
                 ], UserService);
                 return UserService;
-            })(base_service_1.BaseService);
+            }(base_service_1.BaseService));
             exports_1("UserService", UserService);
         }
     }

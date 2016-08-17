@@ -22,25 +22,17 @@ export class UserService extends BaseService{
     }
 
     public login(username:string, password:string, rememberMe: Boolean) {
-        let headers = new Headers();
-
         rememberMe = !!rememberMe
 
-        headers.set('Content-Type', 'application/x-www-form-urlencoded');
-        headers.set('Accept','text/xml');
+        let params:{ [key: string]: any; } = {};
 
-        var body = 'username=' + encodeURIComponent(username) +
-            '&password=' + encodeURIComponent(password) + '&rememberMe='+encodeURIComponent(rememberMe?"true":"false");
+        params["password"] = password;
+        params["username"] = username;
+        params["rememberMe"] = rememberMe;
 
-        this.makeCorsRequest(body);
-
-        return this.http
-            .post(
+        return this.post(
                 BaseService.GATEWAY_USER_LOGIN,
-                body,
-                {
-                    headers
-                }
+                params
             )
             .map(res => res.json())
             .map((res) => {

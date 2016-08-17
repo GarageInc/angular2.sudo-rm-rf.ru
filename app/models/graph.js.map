@@ -1,1 +1,1 @@
-{"version":3,"file":"graph.js","sourceRoot":"","sources":["graph.ts"],"names":["Graph","Graph.constructor"],"mappings":";;;;;;;;;;;;;;YAEA;gBAA2BA,yBAAcA;gBAAzCA;oBAA2BC,8BAAcA;gBAGzCA,CAACA;gBAADD,YAACA;YAADA,CAACA,AAHD,EAA2B,+BAAc,EAGxC;YAHD,yBAGC,CAAA"}
+{"version":3,"file":"graph.js","sourceRoot":"","sources":["graph.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;;YAEA;gBAA2B,yBAAc;gBAAzC;oBAA2B,8BAAc;gBAGzC,CAAC;gBAAD,YAAC;YAAD,CAAC,AAHD,CAA2B,+BAAc,GAGxC;YAHD,yBAGC,CAAA"}
