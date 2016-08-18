@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', "./base/base.service", "../models/user"], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', "./base/base.service", "../models/user", "../models/states/user.state"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __extends = (this && this.__extends) || function (d, b) {
@@ -15,7 +15,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', "./base/base.servi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, base_service_1, user_1;
+    var core_1, http_1, base_service_1, user_1, user_state_1;
     var UserService;
     return {
         setters:[
@@ -31,6 +31,9 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', "./base/base.servi
             },
             function (user_1_1) {
                 user_1 = user_1_1;
+            },
+            function (user_state_1_1) {
+                user_state_1 = user_state_1_1;
             }],
         execute: function() {
             UserService = (function (_super) {
@@ -38,11 +41,8 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', "./base/base.servi
                 function UserService(http) {
                     _super.call(this, http);
                     this.http = http;
-                    this.is_logged_in = false;
-                    this.is_logged_in = !!localStorage.getItem('token');
                 }
                 UserService.prototype.login = function (username, password, rememberMe) {
-                    var _this = this;
                     rememberMe = !!rememberMe;
                     var params = {};
                     params["password"] = password;
@@ -51,57 +51,24 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', "./base/base.servi
                     return this.post(base_service_1.BaseService.GATEWAY_USER_LOGIN, params)
                         .map(function (res) { return res.json(); })
                         .map(function (res) {
-                        if (res.success) {
-                            localStorage.setItem('token', res.token);
-                            _this.is_logged_in = true;
+                        if (res) {
+                            user_state_1.UserState.activeUser.id = res.id;
+                            user_state_1.UserState.activeUser.pub_token = res.pub_token;
                         }
-                        return res.success;
+                        return res;
                     });
                 };
                 UserService.prototype.logout = function () {
-                    localStorage.removeItem('token');
-                    this.is_logged_in = false;
+                    user_state_1.UserState.reset();
                 };
                 UserService.prototype.isAuthenticated = function () {
-                    return this.is_logged_in;
+                    return !!user_state_1.UserState.activeUser.pub_token;
                 };
                 UserService.prototype.extractData = function (res) {
                     var body = res.json();
                     var user = new user_1.User();
                     user.fillFromJSON(body);
                     return user;
-                };
-                UserService.prototype.getTitle = function (text) {
-                    return text.match('<title>(.*)?</title>')[1];
-                };
-                UserService.prototype.makeCorsRequest = function (body) {
-                    // bibliographica.org supports CORS.
-                    var url = base_service_1.BaseService.GATEWAY_USER_LOGIN;
-                    var xhr = new XMLHttpRequest();
-                    //
-                    //xhr.withCredentials = true;
-                    if ("withCredentials" in xhr) {
-                        // XHR for Chrome/Safari/Firefox.
-                        xhr.open("POST", url, true);
-                    }
-                    else {
-                        // CORS not supported.
-                        xhr = null;
-                    }
-                    if (!xhr) {
-                        alert('CORS not supported');
-                        return;
-                    }
-                    // Response handlers.
-                    xhr.onload = function () {
-                        var text = xhr.responseText;
-                        var title = this.getTitle(text);
-                        alert('Response from CORS request to ' + url + ': ' + title);
-                    };
-                    xhr.onerror = function () {
-                        alert('Woops, there was an error making the request.');
-                    };
-                    xhr.send(body);
                 };
                 UserService = __decorate([
                     core_1.Injectable(), 

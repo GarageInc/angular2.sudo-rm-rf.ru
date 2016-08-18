@@ -19,6 +19,39 @@ System.register(["./base/Synchronizable"], function(exports_1, context_1) {
                 function User() {
                     _super.apply(this, arguments);
                 }
+                Object.defineProperty(User.prototype, "pub_token", {
+                    // protected _id: string;
+                    // protected _pub_token: string;
+                    // protected _pub_secret: string;
+                    get: function () {
+                        return localStorage.getItem("pub_token");
+                    },
+                    set: function (pub_token) {
+                        localStorage.setItem("pub_token", pub_token);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(User.prototype, "pub_secret", {
+                    get: function () {
+                        return localStorage.getItem("pub_secret");
+                    },
+                    set: function (pub_secret) {
+                        localStorage.setItem("pub_secret", pub_secret);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(User.prototype, "id", {
+                    get: function () {
+                        return localStorage.getItem("id");
+                    },
+                    set: function (id) {
+                        localStorage.setItem("id", id);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 return User;
             }(Synchronizable_1.Synchronizable));
             exports_1("User", User);

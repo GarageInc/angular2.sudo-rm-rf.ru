@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx', "../../models/states/user.state"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx']
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, Observable_1;
+    var core_1, http_1, Observable_1, user_state_1;
     var BaseService;
     return {
         setters:[
@@ -23,12 +23,20 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx']
             function (Observable_1_1) {
                 Observable_1 = Observable_1_1;
             },
-            function (_1) {}],
+            function (_1) {},
+            function (user_state_1_1) {
+                user_state_1 = user_state_1_1;
+            }],
         execute: function() {
             BaseService = (function () {
                 function BaseService(http) {
                     this.http = http;
                 }
+                BaseService.prototype.setAuthParams = function (params) {
+                    params["id"] = user_state_1.UserState.activeUser.id;
+                    params["pub_token"] = user_state_1.UserState.activeUser.pub_token;
+                    return params;
+                };
                 BaseService.prototype.getHeaders = function () {
                     var headers = new http_1.Headers();
                     headers.set('Content-Type', 'application/x-www-form-urlencoded');
@@ -47,6 +55,27 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx']
                     return this.http
                         .post(url, body, {
                         headers: headers
+                    });
+                };
+                BaseService.prototype.get = function (url, params) {
+                    //
+                    var get_params = new http_1.URLSearchParams();
+                    for (var key in params) {
+                        var value = params[key];
+                        get_params.set(key, encodeURIComponent(value));
+                    }
+                    // let bodyArray:Array<string> = [];
+                    //
+                    // for (var key in params) {
+                    //     var value = params[key];
+                    //
+                    //     bodyArray.push(key + '=' + encodeURIComponent(value))
+                    // }
+                    //
+                    // let body:string = bodyArray.join("&");
+                    return this.http
+                        .get(url, {
+                        search: get_params
                     });
                 };
                 BaseService.prototype.extractData = function (res) {

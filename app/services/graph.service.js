@@ -40,7 +40,8 @@ System.register(['angular2/core', '../models/graph', 'angular2/http', 'rxjs/Rx',
                     this.http = http;
                 }
                 GraphService.prototype.getGraphs = function () {
-                    return this.http.get(base_service_1.BaseService.GATEWAY_GRAPHS)
+                    var params = {};
+                    return this.get(base_service_1.BaseService.GATEWAY_GRAPHS, this.setAuthParams(params))
                         .map(this.extractData)
                         .catch(this.handleError)
                         .toPromise();
@@ -58,7 +59,7 @@ System.register(['angular2/core', '../models/graph', 'angular2/http', 'rxjs/Rx',
                     return graphs;
                 };
                 GraphService.prototype.getGraph = function (id) {
-                    return this.getGraphs().then(function (heroes) { return heroes.filter(function (hero) { return hero.id == id; })[0]; });
+                    return this.getGraphs().then(function (graphs) { return graphs.filter(function (graph) { return graph.id == id; })[0]; });
                 };
                 GraphService = __decorate([
                     core_1.Injectable(), 
