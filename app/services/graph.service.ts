@@ -19,9 +19,12 @@ export class GraphService extends BaseService{
   }
 
   getGraphs (): Promise<Graph[]> {
-    return this.http.get( BaseService.GATEWAY_GRAPHS )
-        .map(this.extractData)
-        .catch(this.handleError)
+
+    var params:{ [ key:string] : string} = {};
+
+    return this.get( BaseService.GATEWAY_GRAPHS,  this.setAuthParams( params))
+        .map( this.extractData)
+        .catch( this.handleError)
         .toPromise();
   }
 
@@ -45,7 +48,7 @@ export class GraphService extends BaseService{
 
   getGraph(id:number){
     return this.getGraphs().then(
-        heroes => heroes.filter(hero => hero.id == id)[0]
+        graphs => graphs.filter(graph => graph.id == id)[0]
     )
   }
 

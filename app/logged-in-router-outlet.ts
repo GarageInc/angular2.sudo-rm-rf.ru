@@ -7,7 +7,7 @@ import { Router, RouterOutlet, ComponentInstruction } from 'angular2/router';
 import { UserService } from './services/user.service';
 
 @Directive({
-    selector: 'router-outlet'
+    selector: 'logged-in-router-outlet'
 })
 
 export class LoggedInRouterOutlet extends RouterOutlet {

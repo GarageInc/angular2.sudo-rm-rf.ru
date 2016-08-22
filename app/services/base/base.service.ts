@@ -1,10 +1,11 @@
 import { Injectable } from 'angular2/core';
 
-import {Http, Response, Headers} from 'angular2/http';
+import {Http, Response, Headers, URLSearchParams} from 'angular2/http';
 
 import { Observable }     from 'rxjs/Observable';
 
 import 'rxjs/Rx';
+import {UserState} from "../../models/states/user.state";
 
 interface ParamsMap<T> {
     [K: string]: T;
@@ -15,8 +16,17 @@ export class BaseService {
 
     protected static GATEWAY_GRAPHS:string = "http://127.0.0.1:3000/index.php/graph/index";
     protected static GATEWAY_USER_LOGIN:string = "http://127.0.0.1:3000/index.php/site/login";
+    // protected static GATEWAY_USER_LOGIN:string = "http://php.sudo-rm-rf.ru/web/index.php/site/login";
 
     constructor (protected http: Http) {}
+
+    public setAuthParams(params:{[key:string] : string}){
+
+        params["id"] = UserState.activeUser.id;
+        params["pub_token"] = UserState.activeUser.pub_token;
+
+        return params;
+    }
 
     public getHeaders():Headers{
         let headers = new Headers();
@@ -48,6 +58,36 @@ export class BaseService {
                 body,
                 {
                     headers
+                }
+            )
+    }
+
+    protected get(url:string, params:{ [key: string] : string; }){
+
+        //
+        let get_params: URLSearchParams = new URLSearchParams();
+
+        for (var key in params) {
+            var value = params[key];
+
+            get_params.set(key, encodeURIComponent(value));
+        }
+
+        // let bodyArray:Array<string> = [];
+        //
+        // for (var key in params) {
+        //     var value = params[key];
+        //
+        //     bodyArray.push(key + '=' + encodeURIComponent(value))
+        // }
+        //
+        // let body:string = bodyArray.join("&");
+
+        return this.http
+            .get(
+                url,
+                {
+                    search: get_params
                 }
             )
     }

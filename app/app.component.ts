@@ -18,8 +18,8 @@ import {ProtectedDirective} from "./protected-directive";
   styleUrls: ['app/assets/css/app.component.css'],
   directives: [
       ROUTER_DIRECTIVES,
-      ProtectedDirective,
-      // LoggedInRouterOutlet
+      // ProtectedDirective,
+      LoggedInRouterOutlet
   ],
   providers: [
     ROUTER_PROVIDERS,

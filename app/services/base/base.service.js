@@ -29,6 +29,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
             }],
         execute: function() {
             BaseService = (function () {
+                // protected static GATEWAY_USER_LOGIN:string = "http://php.sudo-rm-rf.ru/web/index.php/site/login";
                 function BaseService(http) {
                     this.http = http;
                 }
