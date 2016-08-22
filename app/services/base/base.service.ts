@@ -14,7 +14,7 @@ interface ParamsMap<T> {
 @Injectable()
 export class BaseService {
 
-    protected static GATEWAY_GRAPHS:string = "http://127.0.0.1:3000/index.php/graph/index";
+    protected static GATEWAY_GRAPHS:string = "http://127.0.0.1:3000/index.php/graph";
     protected static GATEWAY_USER_LOGIN:string = "http://127.0.0.1:3000/index.php/site/login";
     // protected static GATEWAY_USER_LOGIN:string = "http://php.sudo-rm-rf.ru/web/index.php/site/login";
 
@@ -49,8 +49,6 @@ export class BaseService {
 
         let body:string = bodyArray.join("&");
         let headers = this.getHeaders();
-
-        console.log(body)
 
         return this.http
             .post(
@@ -102,6 +100,8 @@ export class BaseService {
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
 
         console.error(errMsg); // log to console instead
+
+        // this.router.navigate(['Dashboard']);
 
         return Observable.throw(errMsg);
     }

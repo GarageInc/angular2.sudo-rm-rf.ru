@@ -11,7 +11,7 @@ System.register(['angular2/core', 'angular2/router', './../../services/graph.ser
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, router_1, graph_service_1;
-    var GraphsComponent;
+    var GraphCreateComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -24,35 +24,40 @@ System.register(['angular2/core', 'angular2/router', './../../services/graph.ser
                 graph_service_1 = graph_service_1_1;
             }],
         execute: function() {
-            GraphsComponent = (function () {
-                function GraphsComponent(_router, _graphService) {
-                    this._router = _router;
+            GraphCreateComponent = (function () {
+                function GraphCreateComponent(_graphService, _routeParams, _router) {
                     this._graphService = _graphService;
+                    this._routeParams = _routeParams;
+                    this._router = _router;
                 }
-                GraphsComponent.prototype.getGraphs = function () {
+                GraphCreateComponent.prototype.onCreate = function () {
                     var _this = this;
-                    this._graphService.getGraphs()
-                        .then(function (graphs) { return _this.graphs = graphs; }, function (error) { return _this._router.navigate(['Login']); });
+                    this._graphService.create(this.name).subscribe(function (result) {
+                        console.log("Result: " + result);
+                        if (result) {
+                            _this._router.navigate(['Dashboard']);
+                        }
+                        else {
+                            alert("Не удалось создать!");
+                        }
+                    });
                 };
-                GraphsComponent.prototype.ngOnInit = function () {
-                    this.getGraphs();
-                };
-                GraphsComponent.prototype.onSelect = function (graph) { this.selectedGraph = graph; };
-                GraphsComponent = __decorate([
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', String)
+                ], GraphCreateComponent.prototype, "name", void 0);
+                GraphCreateComponent = __decorate([
                     core_1.Component({
-                        selector: 'my-graphs',
-                        templateUrl: 'app/views/graphs/graphs.component.html',
-                        styleUrls: ['app/assets/css/graphs.component.css'],
-                        directives: [
-                            router_1.RouterLink
-                        ]
+                        selector: 'my-graph-create',
+                        templateUrl: 'app/views/graphs/graph-create.component.html',
+                        styleUrls: ['app/assets/css/graph-create.component.css']
                     }), 
-                    __metadata('design:paramtypes', [router_1.Router, graph_service_1.GraphService])
-                ], GraphsComponent);
-                return GraphsComponent;
+                    __metadata('design:paramtypes', [graph_service_1.GraphService, router_1.RouteParams, router_1.Router])
+                ], GraphCreateComponent);
+                return GraphCreateComponent;
             }());
-            exports_1("GraphsComponent", GraphsComponent);
+            exports_1("GraphCreateComponent", GraphCreateComponent);
         }
     }
 });
-//# sourceMappingURL=graphs.component.js.map
+//# sourceMappingURL=graph-create.component.js.map

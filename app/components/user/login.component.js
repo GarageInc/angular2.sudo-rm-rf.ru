@@ -35,6 +35,9 @@ System.register(['angular2/core', 'angular2/router', './../../services/user.serv
                         if (result) {
                             _this.router.navigate(['Dashboard']);
                         }
+                        else {
+                            alert("Не удалось авторизоваться");
+                        }
                     });
                 };
                 __decorate([

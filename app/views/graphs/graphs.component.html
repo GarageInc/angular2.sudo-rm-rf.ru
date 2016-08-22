@@ -1,5 +1,8 @@
 <div>
   <h2>My Graphs</h2>
+
+  <button [routerLink]="['CreateGraph']">Create new graph</button>
+
   <ul class="graphs">
     <li *ngFor="#graph of graphs"
       [class.selected]="graph === selectedGraph"

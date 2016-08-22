@@ -10,7 +10,7 @@ import { UserService } from './../../services/user.service';
 })
 export class LoginComponent {
 
-    constructor(protected userService: UserService, private router: Router) {
+    constructor(protected userService: UserService, protected router: Router) {
     }
 
     @Input() username:string;
@@ -21,10 +21,11 @@ export class LoginComponent {
 
     onLogin() {
 
-
         this.userService.login(this.username, this.password, this.rememberme).subscribe((result) => {
             if (result) {
                 this.router.navigate(['Dashboard']);
+            } else {
+                alert("Не удалось авторизоваться")
             }
         });
     }

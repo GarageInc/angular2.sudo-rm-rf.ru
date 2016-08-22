@@ -22,13 +22,33 @@ export class GraphService extends BaseService{
 
     var params:{ [ key:string] : string} = {};
 
-    return this.get( BaseService.GATEWAY_GRAPHS,  this.setAuthParams( params))
-        .map( this.extractData)
+    return this.get( BaseService.GATEWAY_GRAPHS+"/index",  this.setAuthParams( params))
+        .map( this.extractDataGraphs)
         .catch( this.handleError)
         .toPromise();
   }
 
-  protected extractData(res: Response) {
+  create ( name:string) {
+
+    var params:{ [ key:string] : string} = {};
+
+    params["graphname"]  = name;
+
+    return this.post( BaseService.GATEWAY_GRAPHS+"/create",  this.setAuthParams( params))
+        .map(result => result ? true : false);
+  }
+
+  getGraphInfo(id:number):Promise<Graph>{
+    var params:{ [ key:string] : string} = {};
+
+    params["graph_id"]  = id.toString();
+
+    return this.get( BaseService.GATEWAY_GRAPHS+"/structure",  this.setAuthParams( params))
+        .map( this.extractGraphStructure)
+        .toPromise();
+  }
+
+  protected extractDataGraphs(res: Response) {
     let body = res.json();
 
     var graphs:Graph[] = [];
@@ -41,15 +61,15 @@ export class GraphService extends BaseService{
       graphs.push( graph)
     }
 
-    // console.log(graphs)
-
     return graphs;
   }
 
-  getGraph(id:number){
-    return this.getGraphs().then(
-        graphs => graphs.filter(graph => graph.id == id)[0]
-    )
+  protected extractGraphStructure(res:Response){
+    var graph = new Graph()
+
+    graph.graphname = "test";
+
+    return graph;
   }
 
 }

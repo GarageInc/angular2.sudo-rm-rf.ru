@@ -1,5 +1,5 @@
 import { Component, OnInit } from 'angular2/core';
-import { Router } from 'angular2/router';
+import {Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouterLink} from 'angular2/router';
 
 import { Graph } from './../../models/graph';
 import { GraphService } from './../../services/graph.service';
@@ -7,7 +7,10 @@ import { GraphService } from './../../services/graph.service';
 @Component({
   selector: 'my-graphs',
   templateUrl: 'app/views/graphs/graphs.component.html',
-  styleUrls:  ['app/assets/css/graphs.component.css']
+  styleUrls:  ['app/assets/css/graphs.component.css'],
+  directives: [
+      RouterLink
+  ]
 })
 
 export class GraphsComponent implements OnInit {
@@ -15,19 +18,18 @@ export class GraphsComponent implements OnInit {
   selectedGraph: Graph;
 
   constructor(
-    private _router: Router,
-    private _graphService: GraphService
+    protected _router: Router,
+    protected _graphService: GraphService
   ) { }
 
-  getHeroes() {
-    this._graphService.getGraphs().then(graphs => this.graphs = graphs);
-    console.log(this.graphs)
+  getGraphs() {
+    this._graphService.getGraphs()
+        .then(graphs => this.graphs = graphs, error => this._router.navigate(['Login']));
   }
 
   ngOnInit() {
-    this.getHeroes();
+    this.getGraphs();
   }
 
   onSelect(graph: Graph) { this.selectedGraph = graph; }
-
 }

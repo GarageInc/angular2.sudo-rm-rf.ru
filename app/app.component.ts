@@ -4,6 +4,7 @@ import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/route
 import { DashboardComponent } from './dashboard.component';
 import { GraphsComponent } from './components/graphs/graphs.component';
 import { GraphDetailComponent } from './components/graphs/graph-detail.component';
+import { GraphCreateComponent } from './components/graphs/graph-create.component';
 import {GraphService} from "./services/graph.service";
 import {UserService} from "./services/user.service";
 //
@@ -42,10 +43,14 @@ import {ProtectedDirective} from "./protected-directive";
     },
     {
         path: '/graphs',
-        name: 'Graphs',
+        name: 'MyGraphs',
         component: GraphsComponent
     },
-
+    {
+        path: '/graphs/create',
+        name: 'CreateGraph',
+        component: GraphCreateComponent
+    },
     {
        path: '/login',
         name: 'Login',

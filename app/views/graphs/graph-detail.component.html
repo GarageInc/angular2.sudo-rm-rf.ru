@@ -1,10 +1,12 @@
-<div *ngIf="hero">
-  <h2>{{graph.name}} details!</h2>
+<div *ngIf="graph">
+  <h2>{{graph.graphname}} details!</h2>
   <div>
     <label>id: </label>{{graph.id}}</div>
   <div>
     <label>name: </label>
-    <input [(ngModel)]="graph.name" placeholder="name" />
+    <input [(ngModel)]="graph.graphname" placeholder="Name" />
   </div>
+  <bar-graph bind-data="graphData" width="400" height="150" >
+  </bar-graph>
   <button (click)="goBack()">Back</button>
 </div>

@@ -52,7 +52,6 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                     }
                     var body = bodyArray.join("&");
                     var headers = this.getHeaders();
-                    console.log(body);
                     return this.http
                         .post(url, body, {
                         headers: headers
@@ -87,9 +86,10 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                     var errMsg = (error.message) ? error.message :
                         error.status ? error.status + " - " + error.statusText : 'Server error';
                     console.error(errMsg); // log to console instead
+                    // this.router.navigate(['Dashboard']);
                     return Observable_1.Observable.throw(errMsg);
                 };
-                BaseService.GATEWAY_GRAPHS = "http://127.0.0.1:3000/index.php/graph/index";
+                BaseService.GATEWAY_GRAPHS = "http://127.0.0.1:3000/index.php/graph";
                 BaseService.GATEWAY_USER_LOGIN = "http://127.0.0.1:3000/index.php/site/login";
                 BaseService = __decorate([
                     core_1.Injectable(), 

@@ -24,11 +24,11 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this._graphService.getGraphs()
-      .then(graphs => this.graphs = graphs.slice(1,5));
+      .then(graphs => this.graphs = graphs);
   }
 
   gotoDetail(graph: Graph) {
     let link = ['GraphDetail', { id: graph.id }];
-    this._router.navigate(link);
+    this._router.navigate( link);
   }
 }

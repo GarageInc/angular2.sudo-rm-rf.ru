@@ -41,12 +41,25 @@ System.register(['angular2/core', '../models/graph', 'angular2/http', 'rxjs/Rx',
                 }
                 GraphService.prototype.getGraphs = function () {
                     var params = {};
-                    return this.get(base_service_1.BaseService.GATEWAY_GRAPHS, this.setAuthParams(params))
-                        .map(this.extractData)
+                    return this.get(base_service_1.BaseService.GATEWAY_GRAPHS + "/index", this.setAuthParams(params))
+                        .map(this.extractDataGraphs)
                         .catch(this.handleError)
                         .toPromise();
                 };
-                GraphService.prototype.extractData = function (res) {
+                GraphService.prototype.create = function (name) {
+                    var params = {};
+                    params["graphname"] = name;
+                    return this.post(base_service_1.BaseService.GATEWAY_GRAPHS + "/create", this.setAuthParams(params))
+                        .map(function (result) { return result ? true : false; });
+                };
+                GraphService.prototype.getGraphInfo = function (id) {
+                    var params = {};
+                    params["graph_id"] = id.toString();
+                    return this.get(base_service_1.BaseService.GATEWAY_GRAPHS + "/structure", this.setAuthParams(params))
+                        .map(this.extractGraphStructure)
+                        .toPromise();
+                };
+                GraphService.prototype.extractDataGraphs = function (res) {
                     var body = res.json();
                     var graphs = [];
                     for (var _i = 0, body_1 = body; _i < body_1.length; _i++) {
@@ -55,11 +68,12 @@ System.register(['angular2/core', '../models/graph', 'angular2/http', 'rxjs/Rx',
                         graph.fillFromJSON(entry);
                         graphs.push(graph);
                     }
-                    // console.log(graphs)
                     return graphs;
                 };
-                GraphService.prototype.getGraph = function (id) {
-                    return this.getGraphs().then(function (graphs) { return graphs.filter(function (graph) { return graph.id == id; })[0]; });
+                GraphService.prototype.extractGraphStructure = function (res) {
+                    var graph = new graph_1.Graph();
+                    graph.graphname = "test";
+                    return graph;
                 };
                 GraphService = __decorate([
                     core_1.Injectable(), 

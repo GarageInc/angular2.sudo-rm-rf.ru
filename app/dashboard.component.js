@@ -37,7 +37,7 @@ System.register(['angular2/core', 'angular2/router', './services/graph.service',
                 DashboardComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this._graphService.getGraphs()
-                        .then(function (graphs) { return _this.graphs = graphs.slice(1, 5); });
+                        .then(function (graphs) { return _this.graphs = graphs; });
                 };
                 DashboardComponent.prototype.gotoDetail = function (graph) {
                     var link = ['GraphDetail', { id: graph.id }];
