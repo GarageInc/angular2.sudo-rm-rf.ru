@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './../../models/graph', './../../services/graph.service', "./../../directives/BarGraph"], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../../models/graphs/graph', './../../services/graph.service', "./../../directives/BarGraph"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -31,41 +31,29 @@ System.register(['angular2/core', 'angular2/router', './../../models/graph', './
             }],
         execute: function() {
             GraphDetailComponent = (function () {
-                //
-                // protected host:any;
-                // protected svg:any;
-                // protected margin:any;
-                // protected width:any;
-                // protected height:any;
-                // protected xScale:any;
-                // protected yScale:any;
-                // protected xAxis:any;
-                // protected yAxis:any;
-                // protected htmlElement: HTMLElement;
-                //
                 function GraphDetailComponent(_graphService, _routeParams, element) {
                     this._graphService = _graphService;
                     this._routeParams = _routeParams;
                     this.element = element;
-                    this.graphData = [10, 20, 30, 40, 60];
-                    // this.htmlElement = this.element.nativeElement;
-                    // this.host = D3.select(this.element.nativeElement);
+                    this.graph = new graph_1.Graph();
                 }
                 GraphDetailComponent.prototype.ngOnInit = function () {
+                    this.loadGraphStructure();
+                };
+                GraphDetailComponent.prototype.loadGraphStructure = function () {
                     var _this = this;
                     var id = +this._routeParams.get('id');
-                    this._graphService.getGraphInfo(id)
+                    this._graphService.getGraphSctructure(id)
                         .then(function (graph) { return _this.graph = graph; });
                 };
-                GraphDetailComponent.prototype.ngOnChanges = function () {
-                    // this.host.html('');
-                    // this.svg = this.host.append('svg')
+                GraphDetailComponent.prototype.onSave = function () {
+                    this._graphService.save(this.graph)
+                        .then(this.loadGraphStructure);
                 };
                 GraphDetailComponent.prototype.goBack = function () {
                     window.history.back();
                 };
                 __decorate([
-                    // bar graph data (bound to from template)
                     core_1.Input(), 
                     __metadata('design:type', graph_1.Graph)
                 ], GraphDetailComponent.prototype, "graph", void 0);

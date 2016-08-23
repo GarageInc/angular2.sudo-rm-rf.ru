@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../models/graph', 'angular2/http', 'rxjs/Rx', "./base/base.service"], function(exports_1, context_1) {
+System.register(['angular2/core', '../models/graphs/graph', 'angular2/http', 'rxjs/Rx', "./base/base.service"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __extends = (this && this.__extends) || function (d, b) {
@@ -52,7 +52,14 @@ System.register(['angular2/core', '../models/graph', 'angular2/http', 'rxjs/Rx',
                     return this.post(base_service_1.BaseService.GATEWAY_GRAPHS + "/create", this.setAuthParams(params))
                         .map(function (result) { return result ? true : false; });
                 };
-                GraphService.prototype.getGraphInfo = function (id) {
+                GraphService.prototype.save = function (graph) {
+                    var params = {};
+                    params["graph_id"] = graph.id.toString();
+                    params["graphname"] = graph.graphname;
+                    return this.post(base_service_1.BaseService.GATEWAY_GRAPHS + "/save", this.setAuthParams(params))
+                        .toPromise();
+                };
+                GraphService.prototype.getGraphSctructure = function (id) {
                     var params = {};
                     params["graph_id"] = id.toString();
                     return this.get(base_service_1.BaseService.GATEWAY_GRAPHS + "/structure", this.setAuthParams(params))
@@ -71,8 +78,12 @@ System.register(['angular2/core', '../models/graph', 'angular2/http', 'rxjs/Rx',
                     return graphs;
                 };
                 GraphService.prototype.extractGraphStructure = function (res) {
+                    var body = res.json();
                     var graph = new graph_1.Graph();
-                    graph.graphname = "test";
+                    graph.graphname = body.graphname;
+                    graph.id = body.id;
+                    graph.fillNodes(body.nodes);
+                    graph.fillEdges(body.edges);
                     return graph;
                 };
                 GraphService = __decorate([

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from 'angular2/core';
 import {RouteParams, Route, Router} from 'angular2/router';
 
-import { Graph } from './../../models/graph';
+import { Graph } from '../../models/graphs/graph';
 import { GraphService } from './../../services/graph.service';
 
 @Component({

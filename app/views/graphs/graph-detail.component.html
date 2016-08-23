@@ -6,7 +6,11 @@
     <label>name: </label>
     <input [(ngModel)]="graph.graphname" placeholder="Name" />
   </div>
-  <bar-graph bind-data="graphData" width="400" height="150" >
-  </bar-graph>
+  <button (click)="onSave()">Save</button>
   <button (click)="goBack()">Back</button>
+  <bar-graph bind-graph="graph" width="400" height="150" >
+      <div style="padding: 10px; float: left;">
+        <svg width="900" height="600" style="border: 1px solid; border-radius: 5px; "></svg>
+      </div>
+  </bar-graph>
 </div>

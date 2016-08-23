@@ -1,6 +1,6 @@
 import { Injectable } from 'angular2/core';
 
-import { Graph } from '../models/graph';
+import { Graph } from '../models/graphs/graph';
 
 import { Http, Response } from 'angular2/http';
 
@@ -38,7 +38,18 @@ export class GraphService extends BaseService{
         .map(result => result ? true : false);
   }
 
-  getGraphInfo(id:number):Promise<Graph>{
+  save ( graph:Graph) {
+
+    var params:{ [ key:string] : string} = {};
+
+    params["graph_id"]  = graph.id.toString();
+    params["graphname"]  = graph.graphname;
+
+    return this.post( BaseService.GATEWAY_GRAPHS+"/save",  this.setAuthParams( params))
+        .toPromise();
+  }
+
+  getGraphSctructure(id:number):Promise<Graph>{
     var params:{ [ key:string] : string} = {};
 
     params["graph_id"]  = id.toString();
@@ -65,9 +76,15 @@ export class GraphService extends BaseService{
   }
 
   protected extractGraphStructure(res:Response){
+    let body = res.json();
+
     var graph = new Graph()
 
-    graph.graphname = "test";
+    graph.graphname = body.graphname;
+    graph.id = body.id;
+
+    graph.fillNodes( body.nodes)
+    graph.fillEdges( body.edges)
 
     return graph;
   }

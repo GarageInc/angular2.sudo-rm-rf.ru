@@ -12,6 +12,7 @@ import { LoggedInRouterOutlet } from "./logged-in-router-outlet";
 import { LoginComponent } from './components/user/login.component';
 import { ProfileComponent } from './components/user/profile.component';
 import {ProtectedDirective} from "./protected-directive";
+import {LogoutComponent} from "./components/user/logout.component";
 
 @Component({
   selector: 'my-app',
@@ -29,6 +30,7 @@ import {ProtectedDirective} from "./protected-directive";
   ]
 })
 
+
 @RouteConfig([
     {
         path: '/dashboard',
@@ -37,7 +39,7 @@ import {ProtectedDirective} from "./protected-directive";
         useAsDefault: true
     },
     {
-        path: '/detail/:id',
+        path: '/graphs/detail/:id',
         name: 'GraphDetail',
         component: GraphDetailComponent
     },
@@ -52,9 +54,14 @@ import {ProtectedDirective} from "./protected-directive";
         component: GraphCreateComponent
     },
     {
-       path: '/login',
+        path: '/login',
         name: 'Login',
-       component: LoginComponent
+        component: LoginComponent
+    },
+    {
+        path: '/logout',
+        name: 'Logout',
+        component: LogoutComponent
     },
     {
        path: '/profile',

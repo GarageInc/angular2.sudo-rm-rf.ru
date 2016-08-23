@@ -1,4 +1,4 @@
-import { Graph } from '../models/graph';
+import { Graph } from '../models/graphs/graph';
 
 export var GRAPHS: Graph[] = [
   //{ 'id': 11, 'name': 'Mr. Nice' },

@@ -1,9 +1,8 @@
 import {Component, Input, OnInit, ElementRef} from 'angular2/core';
 import { RouteParams } from 'angular2/router';
 
-// import * as D3 from 'd3/index';
 
-import { Graph } from './../../models/graph';
+import { Graph } from '../../models/graphs/graph';
 import { GraphService } from './../../services/graph.service';
 
 import * as Moment from 'moment';
@@ -18,41 +17,30 @@ import {BarGraph} from "./../../directives/BarGraph";
 
 export class GraphDetailComponent implements OnInit {
 
-  protected graphData: Array<Number>;  // bar graph data (bound to from template)
+  @Input() graph: Graph = new Graph();
 
-  @Input() graph: Graph;
-  //
-  // protected host:any;
-  // protected svg:any;
-  // protected margin:any;
-  // protected width:any;
-  // protected height:any;
-  // protected xScale:any;
-  // protected yScale:any;
-  // protected xAxis:any;
-  // protected yAxis:any;
-  // protected htmlElement: HTMLElement;
-  //
   constructor(
     protected _graphService: GraphService,
     protected _routeParams: RouteParams,
     protected element: ElementRef) {
-
-    this.graphData = [10, 20, 30, 40, 60];
-    // this.htmlElement = this.element.nativeElement;
-    // this.host = D3.select(this.element.nativeElement);
   }
 
   ngOnInit() {
-    let id = +this._routeParams.get('id');
 
-    this._graphService.getGraphInfo(id)
-      .then(graph => this.graph = graph);
+    this.loadGraphStructure()
   }
 
-  ngOnChanges(){
-    // this.host.html('');
-    // this.svg = this.host.append('svg')
+  loadGraphStructure(){
+
+    let id = +this._routeParams.get('id');
+
+    this._graphService.getGraphSctructure(id)
+        .then(graph => this.graph = graph);
+  }
+
+  onSave(){
+    this._graphService.save( this.graph)
+        .then( this.loadGraphStructure);
   }
 
   goBack() {
