@@ -3,11 +3,11 @@ import {Edge} from "./edge";
 import {Node} from "./node";
 
 export class Graph extends Synchronizable {
-  id: number;
+  id: string;
   graphname: string;
 
-  nodes: Array<Node>;
-  edges: Array<Edge>;
+  nodes: Array<Node> = [];
+  edges: Array<Edge> = [];
 
   fillNodes( json_nodes:any){
     this.nodes = [];

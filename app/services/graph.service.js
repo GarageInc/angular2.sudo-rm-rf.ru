@@ -61,7 +61,7 @@ System.register(['angular2/core', '../models/graphs/graph', 'angular2/http', 'rx
                 };
                 GraphService.prototype.getGraphSctructure = function (id) {
                     var params = {};
-                    params["graph_id"] = id.toString();
+                    params["graph_id"] = id;
                     return this.get(base_service_1.BaseService.GATEWAY_GRAPHS + "/structure", this.setAuthParams(params))
                         .map(this.extractGraphStructure)
                         .toPromise();

@@ -13,6 +13,8 @@ import { LoginComponent } from './components/user/login.component';
 import { ProfileComponent } from './components/user/profile.component';
 import {ProtectedDirective} from "./protected-directive";
 import {LogoutComponent} from "./components/user/logout.component";
+import {NodeService} from "./services/node.service";
+import {EdgeService} from "./services/edge.service";
 
 @Component({
   selector: 'my-app',
@@ -26,7 +28,9 @@ import {LogoutComponent} from "./components/user/logout.component";
   providers: [
     ROUTER_PROVIDERS,
     UserService,
-    GraphService
+    GraphService,
+      EdgeService,
+      NodeService
   ]
 })
 

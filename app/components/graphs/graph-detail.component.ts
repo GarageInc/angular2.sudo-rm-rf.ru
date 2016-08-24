@@ -6,7 +6,7 @@ import { Graph } from '../../models/graphs/graph';
 import { GraphService } from './../../services/graph.service';
 
 import * as Moment from 'moment';
-import {BarGraph} from "./../../directives/BarGraph";
+import {BarGraph} from "../bar-graph.component";
 
 @Component({
   selector: 'my-graph-detail',
@@ -27,20 +27,27 @@ export class GraphDetailComponent implements OnInit {
 
   ngOnInit() {
 
+    this.graph.id = this._routeParams.get('id')
     this.loadGraphStructure()
   }
 
   loadGraphStructure(){
 
-    let id = +this._routeParams.get('id');
-
-    this._graphService.getGraphSctructure(id)
+    this._graphService.getGraphSctructure(this.graph.id)
         .then(graph => this.graph = graph);
   }
 
   onSave(){
     this._graphService.save( this.graph)
-        .then( this.loadGraphStructure);
+        .then( this.saveSucces, this.saveError);
+  }
+
+  saveSucces(){
+    alert("Успешно!");
+  }
+
+  saveError(){
+    alert("Ошибка!");
   }
 
   goBack() {

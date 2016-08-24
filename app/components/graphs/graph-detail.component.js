@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../../models/graphs/graph', './../../services/graph.service', "./../../directives/BarGraph"], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../../models/graphs/graph', './../../services/graph.service', "../bar-graph.component"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', '../../models/graphs/graph'
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, graph_1, graph_service_1, BarGraph_1;
+    var core_1, router_1, graph_1, graph_service_1, bar_graph_component_1;
     var GraphDetailComponent;
     return {
         setters:[
@@ -26,8 +26,8 @@ System.register(['angular2/core', 'angular2/router', '../../models/graphs/graph'
             function (graph_service_1_1) {
                 graph_service_1 = graph_service_1_1;
             },
-            function (BarGraph_1_1) {
-                BarGraph_1 = BarGraph_1_1;
+            function (bar_graph_component_1_1) {
+                bar_graph_component_1 = bar_graph_component_1_1;
             }],
         execute: function() {
             GraphDetailComponent = (function () {
@@ -38,17 +38,23 @@ System.register(['angular2/core', 'angular2/router', '../../models/graphs/graph'
                     this.graph = new graph_1.Graph();
                 }
                 GraphDetailComponent.prototype.ngOnInit = function () {
+                    this.graph.id = this._routeParams.get('id');
                     this.loadGraphStructure();
                 };
                 GraphDetailComponent.prototype.loadGraphStructure = function () {
                     var _this = this;
-                    var id = +this._routeParams.get('id');
-                    this._graphService.getGraphSctructure(id)
+                    this._graphService.getGraphSctructure(this.graph.id)
                         .then(function (graph) { return _this.graph = graph; });
                 };
                 GraphDetailComponent.prototype.onSave = function () {
                     this._graphService.save(this.graph)
-                        .then(this.loadGraphStructure);
+                        .then(this.saveSucces, this.saveError);
+                };
+                GraphDetailComponent.prototype.saveSucces = function () {
+                    alert("Успешно!");
+                };
+                GraphDetailComponent.prototype.saveError = function () {
+                    alert("Ошибка!");
                 };
                 GraphDetailComponent.prototype.goBack = function () {
                     window.history.back();
@@ -62,7 +68,7 @@ System.register(['angular2/core', 'angular2/router', '../../models/graphs/graph'
                         selector: 'my-graph-detail',
                         templateUrl: 'app/views/graphs/graph-detail.component.html',
                         styleUrls: ['app/assets/css/graph-detail.component.css'],
-                        directives: [BarGraph_1.BarGraph],
+                        directives: [bar_graph_component_1.BarGraph],
                     }), 
                     __metadata('design:paramtypes', [graph_service_1.GraphService, router_1.RouteParams, core_1.ElementRef])
                 ], GraphDetailComponent);

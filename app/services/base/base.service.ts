@@ -15,6 +15,8 @@ interface ParamsMap<T> {
 export class BaseService {
 
     protected static GATEWAY_GRAPHS:string = "http://127.0.0.1:3000/index.php/graph";
+    protected static GATEWAY_NODES:string = "http://127.0.0.1:3000/index.php/node";
+    protected static GATEWAY_EDGES:string = "http://127.0.0.1:3000/index.php/edge";
     protected static GATEWAY_USER_LOGIN:string = "http://127.0.0.1:3000/index.php/site/login";
     // protected static GATEWAY_USER_LOGIN:string = "http://php.sudo-rm-rf.ru/web/index.php/site/login";
 

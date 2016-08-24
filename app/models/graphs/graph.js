@@ -24,6 +24,8 @@ System.register(["../base/Synchronizable", "./edge", "./node"], function(exports
                 __extends(Graph, _super);
                 function Graph() {
                     _super.apply(this, arguments);
+                    this.nodes = [];
+                    this.edges = [];
                 }
                 Graph.prototype.fillNodes = function (json_nodes) {
                     this.nodes = [];

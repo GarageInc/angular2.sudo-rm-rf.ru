@@ -49,10 +49,10 @@ export class GraphService extends BaseService{
         .toPromise();
   }
 
-  getGraphSctructure(id:number):Promise<Graph>{
+  getGraphSctructure(id:string):Promise<Graph>{
     var params:{ [ key:string] : string} = {};
 
-    params["graph_id"]  = id.toString();
+    params["graph_id"]  = id;
 
     return this.get( BaseService.GATEWAY_GRAPHS+"/structure",  this.setAuthParams( params))
         .map( this.extractGraphStructure)
