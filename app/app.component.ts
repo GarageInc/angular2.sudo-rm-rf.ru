@@ -2,7 +2,7 @@ import { Component } from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
 
 import { DashboardComponent } from './dashboard.component';
-import { GraphsComponent } from './components/graphs/graphs.component';
+import { MyGraphsComponent } from './components/graphs/mygraphs.component';
 import { GraphDetailComponent } from './components/graphs/graph-detail.component';
 import { GraphCreateComponent } from './components/graphs/graph-create.component';
 import {GraphService} from "./services/graph.service";
@@ -50,7 +50,7 @@ import {EdgeService} from "./services/edge.service";
     {
         path: '/graphs',
         name: 'MyGraphs',
-        component: GraphsComponent
+        component: MyGraphsComponent
     },
     {
         path: '/graphs/create',

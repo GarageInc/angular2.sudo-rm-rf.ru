@@ -34,11 +34,12 @@ export class NodeService extends BaseService{
         .toPromise();
   }
 
-  delete (  id:string) {
+  delete ( graph:Graph, id:string) {
 
     var params:{ [ key:string] : string} = {};
 
     params["node_id"] = id;
+    params["graph_id"] = graph.id;
 
     return this.post( this.GATEWAY + "/delete",  this.setAuthParams( params))
         .map(result => result ? true : false)

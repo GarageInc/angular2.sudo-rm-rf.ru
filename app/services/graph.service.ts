@@ -30,6 +30,16 @@ export class GraphService extends BaseService{
         .toPromise();
   }
 
+  getMyGraphs (): Promise<Graph[]> {
+
+    var params:{ [ key:string] : string} = {};
+
+    return this.get( this.GATEWAY+"/usergraphs",  this.setAuthParams( params))
+        .map( this.extractDataGraphs)
+        .catch( this.handleError)
+        .toPromise();
+  }
+
   create ( name:string) {
 
     var params:{ [ key:string] : string} = {};
@@ -61,11 +71,11 @@ export class GraphService extends BaseService{
         .toPromise();
   }
 
-  findPath(id:string,node_first_id:string, node_second_id:string){
+  findPath(graph:Graph,node_first_id:string, node_second_id:string){
 
     var params:{ [ key:string] : string} = {};
 
-    params["graph_id"]  = id;
+    params["graph_id"]  = graph.id;
     params["node_first_id"]  = node_first_id;
     params["node_second_id"]  = node_second_id;
     

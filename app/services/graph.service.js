@@ -47,6 +47,13 @@ System.register(['angular2/core', '../models/graphs/graph', 'angular2/http', 'rx
                         .catch(this.handleError)
                         .toPromise();
                 };
+                GraphService.prototype.getMyGraphs = function () {
+                    var params = {};
+                    return this.get(this.GATEWAY + "/usergraphs", this.setAuthParams(params))
+                        .map(this.extractDataGraphs)
+                        .catch(this.handleError)
+                        .toPromise();
+                };
                 GraphService.prototype.create = function (name) {
                     var params = {};
                     params["graphname"] = name;
@@ -67,9 +74,9 @@ System.register(['angular2/core', '../models/graphs/graph', 'angular2/http', 'rx
                         .map(this.extractGraphStructure)
                         .toPromise();
                 };
-                GraphService.prototype.findPath = function (id, node_first_id, node_second_id) {
+                GraphService.prototype.findPath = function (graph, node_first_id, node_second_id) {
                     var params = {};
-                    params["graph_id"] = id;
+                    params["graph_id"] = graph.id;
                     params["node_first_id"] = node_first_id;
                     params["node_second_id"] = node_second_id;
                     return this.post(this.GATEWAY + "/findpath", this.setAuthParams(params))

@@ -1,0 +1,17 @@
+<div>
+  <h2>My Graphs</h2>
+
+  <button [routerLink]="['CreateGraph']">Create new graph</button>
+
+  <ul class="graphs">
+    <li *ngFor="#graph of graphs"
+      [class.selected]="graph === selectedGraph"
+      (click)="onSelect(graph)">
+      <span class="badge">{{graph.id}}</span> {{graph.graphname}}
+    </li>
+  </ul>
+  <div *ngIf="selectedGraph">
+    <h2>{{selectedGraph.graphname | uppercase}} is my graph</h2>
+    <button (click)="goToDetail()">View Details</button>
+  </div>
+</div>

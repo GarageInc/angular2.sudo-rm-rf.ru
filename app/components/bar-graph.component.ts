@@ -29,7 +29,13 @@ export class BarGraphComponent
     protected edge_weight:number = 10;
 
     protected selected_edge_for_deleting_domEl:any;
-    protected selected_edge_for_deleting:any;
+
+    public get selected_edge_for_deleting(){
+        if( this.selected_edge_for_deleting_domEl){
+
+            return this.selected_edge_for_deleting_domEl.datum();
+        }
+    };
 
 
     // -->
@@ -38,21 +44,30 @@ export class BarGraphComponent
     protected first_selected_node_d3DomEl:any;
     protected second_selected_node_d3DomEl:any;
 
-    public get selected_node_first(){
+    public selected_node_current:Node;
+    public selected_node_first:Node;
+    public selected_node_second:Node;
 
-        if( this.first_selected_node_d3DomEl)
-            return this.first_selected_node_d3DomEl.datum();
-    };
-    public get selected_node_second(){
+    public setSelectedNodeFirst( node:Node){
 
-        if( this.second_selected_node_d3DomEl)
-            return this.second_selected_node_d3DomEl.datum();
-    };
+        if(node){
 
-    public get selected_node_for_deleting(){
+            this.selected_node_first = node;
+        }
+    }
+    public setSelectedNodeSecond( node:Node){
 
-        if( this.current_selected_node_d3DomEl)
-            return this.current_selected_node_d3DomEl.datum();
+        if(node) {
+
+            this.selected_node_second = node;
+        }
+    }
+    public setSelectedNodeCurrent( node:Node){
+
+        if(node) {
+
+            this.selected_node_current = node;
+        }
     }
     // <--
 
@@ -62,7 +77,7 @@ export class BarGraphComponent
         protected _edgeService: EdgeService
     )
     {
-        this.nodes_ids_in_path = new Array<string>();
+        this.edges_in_path= new Array<Edge>();
     }
 
     get graph_edges(){
@@ -74,8 +89,6 @@ export class BarGraphComponent
     }
 
     protected build(){
-
-        console.log(this.graph)
 
         var svg = d3.select("svg");
         var width = +svg.attr("width"),
@@ -122,7 +135,7 @@ export class BarGraphComponent
             .enter().append("line")
             .attr("class", function(d:any){
 
-                return getLineClass.call(this, $this.nodes_ids_in_path, d, inPath);
+                return getLineClass.call(this, $this.edges_in_path, d.source, d.target, inPath);
             })
             .attr("stroke-width", function(d:any) {
 
@@ -132,16 +145,19 @@ export class BarGraphComponent
             .on("click", function(d:any, i:any, e:any){
 
                 if( $this.selected_edge_for_deleting_domEl){
-                    $this.selected_edge_for_deleting_domEl.attr("class", function(){
-                        return getLineClass.call(this, $this.nodes_ids_in_path, d, inPath)
+                    $this.selected_edge_for_deleting_domEl.attr("class", function(data:any){
+
+                        console.log($this.selected_edge_for_deleting)
+                        console.log(data)
+                        var csscl = getLineClass.call(this, $this.edges_in_path, data.source.id, data.target.id, inPath)
+                        console.log(csscl)
+                        return csscl;
                     })
                 }
 
                 $this.selected_edge_for_deleting_domEl = d3.select(this);
 
                 $this.selected_edge_for_deleting_domEl.attr("class", "line_selected");
-
-                $this.selected_edge_for_deleting = d;
             });
 
         var node = svg.append("g")
@@ -221,9 +237,9 @@ export class BarGraphComponent
             d.fy = null;
         }
 
-        function getLineClass( nodes_ids_in_path:Array<Edge>, d:any, callback:Function){
+        function getLineClass( edges_in_path:Array<Edge>, source_id:string, target_id:string, callback:Function){
 
-            if( callback.call(this, nodes_ids_in_path, d.source, d.target) == true){
+            if( callback.call(this, edges_in_path, source_id, target_id) == true){
 
                 return "line_in_path"
             }
@@ -231,11 +247,14 @@ export class BarGraphComponent
             return "line_default";
         }
 
-        function inPath (nodes_ids_in_path:Array<string>, id_source:any, id_target:any){
+        function inPath (edges_in_path:Array<Edge>, id_source:any, id_target:any){
 
-            for( let node_id of nodes_ids_in_path){
+            console.log( arguments)
 
-                if( node_id == id_source || node_id == id_target){
+            for( let edge of edges_in_path){
+
+                if( edge.node_first_id == id_source && edge.node_second_id == id_target
+                || edge.node_first_id == id_target && edge.node_second_id == id_source  ){
 
                     return true;
                 }// pass
@@ -247,7 +266,11 @@ export class BarGraphComponent
         function nodeClick( d3node:any, scope:any){
 
             scope.current_selected_node_d3DomEl = d3node;
-            scope.current_selected_node_d3DomEl.attr("class", "circle_for_delete")
+            if(scope.current_selected_node_d3DomEl){
+
+                scope.setSelectedNodeCurrent(scope.current_selected_node_d3DomEl.datum())
+                scope.current_selected_node_d3DomEl.attr("class", "circle_for_delete")
+            }
 
             if( d3node === scope.selected_node_first_d3DomEl || d3node === scope.selected_node_second_d3DomEl){
                 return;
@@ -265,11 +288,13 @@ export class BarGraphComponent
             if( scope.selected_node_first_d3DomEl){
 
                 scope.selected_node_first_d3DomEl.attr("class",  "circle_for_path");
+                scope.setSelectedNodeFirst(scope.selected_node_first_d3DomEl.datum())
             }// pass
 
             if( scope.selected_node_second_d3DomEl){
 
                 scope.selected_node_second_d3DomEl.attr("class",  "circle_for_delete");
+                scope.setSelectedNodeSecond(scope.selected_node_second_d3DomEl.datum())
             }// pass
         }
     }
@@ -290,41 +315,37 @@ export class BarGraphComponent
 
         if(!this.selected_node_first || !this.selected_node_second){
             alert("Not selected nodes!")
-        }
+        } else {
 
-        this._edgeService.create(this.graph, this.edge_weight, this.selected_node_first.id, this.selected_node_second.id)
-            .then(
-                result => {
-                    this.graph.edges.push( result as Edge);
-                    this.build();
-                },
-                error => alert("Rejected: " + error.message)
-            )
+            this._edgeService.create(this.graph, this.edge_weight, this.selected_node_first.id, this.selected_node_second.id)
+                .then(
+                    result => {
+                        this.graph.edges.push( result as Edge);
+                        this.build();
+                    },
+                    error => alert("Rejected: " + error.message)
+                )
+        }
     }
 
     onSelectFirstNode( obj:Node){
 
-        this.selected_node_first = obj;
-
-        console.log(this.selected_node_first);
+        this.setSelectedNodeFirst( obj)
     }
 
 
     onSelectSecondNode( obj:Node){
 
-        this.selected_node_second = obj;
-
-        console.log(this.selected_node_second);
+        this.setSelectedNodeSecond( obj)
     }
 
     onDeleteEdge(){
 
-        this._edgeService.delete( this.selected_edge_for_deleting.edge_id)
+        this._edgeService.delete(this.graph, this.selected_edge_for_deleting.edge_id)
             .then(
                 result=>{
 
                     this.graph.deleteEdgeById(this.selected_edge_for_deleting.edge_id)
-
 
                     this.build();
                 },
@@ -334,10 +355,10 @@ export class BarGraphComponent
 
     onDeleteNode(){
 
-        this._nodeService.delete( this.selected_node_for_deleting.id)
+        this._nodeService.delete( this.graph, this.selected_node_current.id)
             .then(
                 result=>{
-                    this.graph.deleteNodeById(this.selected_node_for_deleting.id);
+                    this.graph.deleteNodeById(this.selected_node_current.id);
 
                     this.build();
                 },
@@ -346,48 +367,68 @@ export class BarGraphComponent
     }
 
     protected length_between_nodes:number = 0;
-    protected nodes_ids_in_path:Array<string>;
-
-    public get nodes_in_path():Array<Node>{
-
-        var nodes:Array<Node> = new Array<Node>();
-
-        if( this.nodes_ids_in_path.length > 0 && this.graph_nodes.length>0){
-
-            for(let id of this.nodes_ids_in_path){
-                for(let node of this.graph_nodes){
-
-                    if( id == node.id){
-                        nodes.push( node);
-                    }
-                }
-            }
-        } // pass
-
-        return nodes;
-    }
+    protected nodes_path:string;
+    protected edges_in_path:Array<Edge>;
 
     onFindPath(){
 
-        this._graphService.findPath(this.graph.id, this.selected_node_first.id, this.selected_node_second.id)
+        this._graphService.findPath(this.graph, this.selected_node_first.id, this.selected_node_second.id)
             .then(
                 result=>{
 
-                    this.nodes_ids_in_path = new Array<string>();
-                    
-                    for( let item in result.path){
-                        this.nodes_ids_in_path.push( item)
+                    this.edges_in_path = new Array<Edge>();
+
+                    this.nodes_path = "";
+
+                    if( result.path.length > 0 && this.graph_edges.length > 0){
+
+                        for (let index_first = 0, index_second = index_first+1; index_second < result.path.length ;index_first++, index_second++){
+
+                            var id_source= result.path[index_first];
+                            var id_target= result.path[index_second];
+
+                            for(let edge of this.graph_edges){
+
+                                if( id_source == edge.node_first_id && id_target == edge.node_second_id
+                                || id_source == edge.node_second_id && id_target == edge.node_first_id){
+                                    this.edges_in_path.push( edge);
+
+                                    break;
+                                }
+                            }
+                        }
+
+                        console.log(result.path)
+                        for( let index = 0; index < result.path.length; index++){
+
+                            var node_id = result.path[index];
+
+                            console.log(node_id)
+
+                            for( let node of this.graph_nodes){
+                                if( node_id == node.id){
+
+                                    this.nodes_path+= "[" + node.nodename + "]";
+                                    break;
+                                }
+                            }
+                        }
+
+                        console.log(this.nodes_path)
                     }
 
                     this.length_between_nodes = +result.length;
+
+                    this.build();
                 },
                 error => alert("Rejected: " + error.message)
             )
     }
 
-
     protected __render(newValue: Graph): void
     {
+        console.log("__render")
+
         if( !newValue )
             return;
 
@@ -396,6 +437,8 @@ export class BarGraphComponent
 
     protected ngOnChanges( changes: { [propertyName: string]: SimpleChange } ): void
     {
+
+        console.log("ngOnChange")
         this.__render( this.graph );
     }
 }

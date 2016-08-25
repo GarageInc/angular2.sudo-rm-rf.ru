@@ -48,9 +48,10 @@ System.register(['angular2/core', '../models/graphs/node', 'angular2/http', 'rxj
                         .map(this.extractNodeStructure)
                         .toPromise();
                 };
-                NodeService.prototype.delete = function (id) {
+                NodeService.prototype.delete = function (graph, id) {
                     var params = {};
                     params["node_id"] = id;
+                    params["graph_id"] = graph.id;
                     return this.post(this.GATEWAY + "/delete", this.setAuthParams(params))
                         .map(function (result) { return result ? true : false; })
                         .toPromise();

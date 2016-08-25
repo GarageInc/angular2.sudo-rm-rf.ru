@@ -39,7 +39,7 @@ System.register(['angular2/core', 'angular2/router', './services/graph.service',
                     this._graphService.getGraphs()
                         .then(function (graphs) { return _this.graphs = graphs; });
                 };
-                DashboardComponent.prototype.gotoDetail = function (graph) {
+                DashboardComponent.prototype.goToDetail = function (graph) {
                     var link = ['GraphDetail', { id: graph.id }];
                     this._router.navigate(link);
                 };

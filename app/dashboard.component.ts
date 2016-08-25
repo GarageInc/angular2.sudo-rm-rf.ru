@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
       .then(graphs => this.graphs = graphs);
   }
 
-  gotoDetail(graph: Graph) {
+  goToDetail(graph: Graph) {
     let link = ['GraphDetail', { id: graph.id }];
     this._router.navigate( link);
   }

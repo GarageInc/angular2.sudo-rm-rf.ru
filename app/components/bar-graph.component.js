@@ -35,34 +35,33 @@ System.register(['angular2/core', "../services/graph.service", "../services/node
                     this._edgeService = _edgeService;
                     this.edge_weight = 10;
                     this.length_between_nodes = 0;
-                    this.nodes_ids_in_path = new Array();
+                    this.edges_in_path = new Array();
                 }
-                Object.defineProperty(BarGraphComponent.prototype, "selected_node_first", {
+                Object.defineProperty(BarGraphComponent.prototype, "selected_edge_for_deleting", {
                     get: function () {
-                        if (this.first_selected_node_d3DomEl)
-                            return this.first_selected_node_d3DomEl.datum();
+                        if (this.selected_edge_for_deleting_domEl) {
+                            return this.selected_edge_for_deleting_domEl.datum();
+                        }
                     },
                     enumerable: true,
                     configurable: true
                 });
                 ;
-                Object.defineProperty(BarGraphComponent.prototype, "selected_node_second", {
-                    get: function () {
-                        if (this.second_selected_node_d3DomEl)
-                            return this.second_selected_node_d3DomEl.datum();
-                    },
-                    enumerable: true,
-                    configurable: true
-                });
-                ;
-                Object.defineProperty(BarGraphComponent.prototype, "selected_node_for_deleting", {
-                    get: function () {
-                        if (this.current_selected_node_d3DomEl)
-                            return this.current_selected_node_d3DomEl.datum();
-                    },
-                    enumerable: true,
-                    configurable: true
-                });
+                BarGraphComponent.prototype.setSelectedNodeFirst = function (node) {
+                    if (node) {
+                        this.selected_node_first = node;
+                    }
+                };
+                BarGraphComponent.prototype.setSelectedNodeSecond = function (node) {
+                    if (node) {
+                        this.selected_node_second = node;
+                    }
+                };
+                BarGraphComponent.prototype.setSelectedNodeCurrent = function (node) {
+                    if (node) {
+                        this.selected_node_current = node;
+                    }
+                };
                 Object.defineProperty(BarGraphComponent.prototype, "graph_edges", {
                     get: function () {
                         return this.graph.edges;
@@ -78,7 +77,6 @@ System.register(['angular2/core', "../services/graph.service", "../services/node
                     configurable: true
                 });
                 BarGraphComponent.prototype.build = function () {
-                    console.log(this.graph);
                     var svg = d3.select("svg");
                     var width = +svg.attr("width"), height = +svg.attr("height");
                     svg.selectAll("*").remove();
@@ -110,7 +108,7 @@ System.register(['angular2/core', "../services/graph.service", "../services/node
                         .data(links)
                         .enter().append("line")
                         .attr("class", function (d) {
-                        return getLineClass.call(this, $this.nodes_ids_in_path, d, inPath);
+                        return getLineClass.call(this, $this.edges_in_path, d.source, d.target, inPath);
                     })
                         .attr("stroke-width", function (d) {
                         var stroke = 20.0 * d.weight / maxWeigth;
@@ -118,13 +116,16 @@ System.register(['angular2/core', "../services/graph.service", "../services/node
                     })
                         .on("click", function (d, i, e) {
                         if ($this.selected_edge_for_deleting_domEl) {
-                            $this.selected_edge_for_deleting_domEl.attr("class", function () {
-                                return getLineClass.call(this, $this.nodes_ids_in_path, d, inPath);
+                            $this.selected_edge_for_deleting_domEl.attr("class", function (data) {
+                                console.log($this.selected_edge_for_deleting);
+                                console.log(data);
+                                var csscl = getLineClass.call(this, $this.edges_in_path, data.source.id, data.target.id, inPath);
+                                console.log(csscl);
+                                return csscl;
                             });
                         }
                         $this.selected_edge_for_deleting_domEl = d3.select(this);
                         $this.selected_edge_for_deleting_domEl.attr("class", "line_selected");
-                        $this.selected_edge_for_deleting = d;
                     });
                     var node = svg.append("g")
                         .attr("class", "nodes")
@@ -188,16 +189,18 @@ System.register(['angular2/core', "../services/graph.service", "../services/node
                         d.fx = null;
                         d.fy = null;
                     }
-                    function getLineClass(nodes_ids_in_path, d, callback) {
-                        if (callback.call(this, nodes_ids_in_path, d.source, d.target) == true) {
+                    function getLineClass(edges_in_path, source_id, target_id, callback) {
+                        if (callback.call(this, edges_in_path, source_id, target_id) == true) {
                             return "line_in_path";
                         }
                         return "line_default";
                     }
-                    function inPath(nodes_ids_in_path, id_source, id_target) {
-                        for (var _i = 0, nodes_ids_in_path_1 = nodes_ids_in_path; _i < nodes_ids_in_path_1.length; _i++) {
-                            var node_id = nodes_ids_in_path_1[_i];
-                            if (node_id == id_source || node_id == id_target) {
+                    function inPath(edges_in_path, id_source, id_target) {
+                        console.log(arguments);
+                        for (var _i = 0, edges_in_path_1 = edges_in_path; _i < edges_in_path_1.length; _i++) {
+                            var edge = edges_in_path_1[_i];
+                            if (edge.node_first_id == id_source && edge.node_second_id == id_target
+                                || edge.node_first_id == id_target && edge.node_second_id == id_source) {
                                 return true;
                             } // pass
                         }
@@ -205,7 +208,10 @@ System.register(['angular2/core', "../services/graph.service", "../services/node
                     }
                     function nodeClick(d3node, scope) {
                         scope.current_selected_node_d3DomEl = d3node;
-                        scope.current_selected_node_d3DomEl.attr("class", "circle_for_delete");
+                        if (scope.current_selected_node_d3DomEl) {
+                            scope.setSelectedNodeCurrent(scope.current_selected_node_d3DomEl.datum());
+                            scope.current_selected_node_d3DomEl.attr("class", "circle_for_delete");
+                        }
                         if (d3node === scope.selected_node_first_d3DomEl || d3node === scope.selected_node_second_d3DomEl) {
                             return;
                         }
@@ -216,9 +222,11 @@ System.register(['angular2/core', "../services/graph.service", "../services/node
                         scope.selected_node_second_d3DomEl = d3node;
                         if (scope.selected_node_first_d3DomEl) {
                             scope.selected_node_first_d3DomEl.attr("class", "circle_for_path");
+                            scope.setSelectedNodeFirst(scope.selected_node_first_d3DomEl.datum());
                         } // pass
                         if (scope.selected_node_second_d3DomEl) {
                             scope.selected_node_second_d3DomEl.attr("class", "circle_for_delete");
+                            scope.setSelectedNodeSecond(scope.selected_node_second_d3DomEl.datum());
                         } // pass
                     }
                 };
@@ -235,23 +243,23 @@ System.register(['angular2/core', "../services/graph.service", "../services/node
                     if (!this.selected_node_first || !this.selected_node_second) {
                         alert("Not selected nodes!");
                     }
-                    this._edgeService.create(this.graph, this.edge_weight, this.selected_node_first.id, this.selected_node_second.id)
-                        .then(function (result) {
-                        _this.graph.edges.push(result);
-                        _this.build();
-                    }, function (error) { return alert("Rejected: " + error.message); });
+                    else {
+                        this._edgeService.create(this.graph, this.edge_weight, this.selected_node_first.id, this.selected_node_second.id)
+                            .then(function (result) {
+                            _this.graph.edges.push(result);
+                            _this.build();
+                        }, function (error) { return alert("Rejected: " + error.message); });
+                    }
                 };
                 BarGraphComponent.prototype.onSelectFirstNode = function (obj) {
-                    this.selected_node_first = obj;
-                    console.log(this.selected_node_first);
+                    this.setSelectedNodeFirst(obj);
                 };
                 BarGraphComponent.prototype.onSelectSecondNode = function (obj) {
-                    this.selected_node_second = obj;
-                    console.log(this.selected_node_second);
+                    this.setSelectedNodeSecond(obj);
                 };
                 BarGraphComponent.prototype.onDeleteEdge = function () {
                     var _this = this;
-                    this._edgeService.delete(this.selected_edge_for_deleting.edge_id)
+                    this._edgeService.delete(this.graph, this.selected_edge_for_deleting.edge_id)
                         .then(function (result) {
                         _this.graph.deleteEdgeById(_this.selected_edge_for_deleting.edge_id);
                         _this.build();
@@ -259,48 +267,57 @@ System.register(['angular2/core', "../services/graph.service", "../services/node
                 };
                 BarGraphComponent.prototype.onDeleteNode = function () {
                     var _this = this;
-                    this._nodeService.delete(this.selected_node_for_deleting.id)
+                    this._nodeService.delete(this.graph, this.selected_node_current.id)
                         .then(function (result) {
-                        _this.graph.deleteNodeById(_this.selected_node_for_deleting.id);
+                        _this.graph.deleteNodeById(_this.selected_node_current.id);
                         _this.build();
                     }, function (error) { return alert("Rejected: " + error.message); });
                 };
-                Object.defineProperty(BarGraphComponent.prototype, "nodes_in_path", {
-                    get: function () {
-                        var nodes = new Array();
-                        if (this.nodes_ids_in_path.length > 0 && this.graph_nodes.length > 0) {
-                            for (var _i = 0, _a = this.nodes_ids_in_path; _i < _a.length; _i++) {
-                                var id = _a[_i];
-                                for (var _b = 0, _c = this.graph_nodes; _b < _c.length; _b++) {
-                                    var node = _c[_b];
-                                    if (id == node.id) {
-                                        nodes.push(node);
+                BarGraphComponent.prototype.onFindPath = function () {
+                    var _this = this;
+                    this._graphService.findPath(this.graph, this.selected_node_first.id, this.selected_node_second.id)
+                        .then(function (result) {
+                        _this.edges_in_path = new Array();
+                        _this.nodes_path = "";
+                        if (result.path.length > 0 && _this.graph_edges.length > 0) {
+                            for (var index_first = 0, index_second = index_first + 1; index_second < result.path.length; index_first++, index_second++) {
+                                var id_source = result.path[index_first];
+                                var id_target = result.path[index_second];
+                                for (var _i = 0, _a = _this.graph_edges; _i < _a.length; _i++) {
+                                    var edge = _a[_i];
+                                    if (id_source == edge.node_first_id && id_target == edge.node_second_id
+                                        || id_source == edge.node_second_id && id_target == edge.node_first_id) {
+                                        _this.edges_in_path.push(edge);
+                                        break;
                                     }
                                 }
                             }
-                        } // pass
-                        return nodes;
-                    },
-                    enumerable: true,
-                    configurable: true
-                });
-                BarGraphComponent.prototype.onFindPath = function () {
-                    var _this = this;
-                    this._graphService.findPath(this.graph.id, this.selected_node_first.id, this.selected_node_second.id)
-                        .then(function (result) {
-                        _this.nodes_ids_in_path = new Array();
-                        for (var item in result.path) {
-                            _this.nodes_ids_in_path.push(item);
+                            console.log(result.path);
+                            for (var index = 0; index < result.path.length; index++) {
+                                var node_id = result.path[index];
+                                console.log(node_id);
+                                for (var _b = 0, _c = _this.graph_nodes; _b < _c.length; _b++) {
+                                    var node = _c[_b];
+                                    if (node_id == node.id) {
+                                        _this.nodes_path += "[" + node.nodename + "]";
+                                        break;
+                                    }
+                                }
+                            }
+                            console.log(_this.nodes_path);
                         }
                         _this.length_between_nodes = +result.length;
+                        _this.build();
                     }, function (error) { return alert("Rejected: " + error.message); });
                 };
                 BarGraphComponent.prototype.__render = function (newValue) {
+                    console.log("__render");
                     if (!newValue)
                         return;
                     this.build();
                 };
                 BarGraphComponent.prototype.ngOnChanges = function (changes) {
+                    console.log("ngOnChange");
                     this.__render(this.graph);
                 };
                 BarGraphComponent = __decorate([

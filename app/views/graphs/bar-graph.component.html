@@ -35,6 +35,25 @@
 </div>
 
 <div style="width: 300px; padding: 10px; float: left;  padding: 10px 10px; border-radius: 5px; float:left; ">
+
+    <div>
+        <div style="padding: 10px; float: left; width: 180px;">
+            <div class="form-group">
+                <input type="submit" class="btn btn-danger"  value="Delete edge" [disabled]="!selected_edge_for_deleting" (click)="onDeleteEdge()">
+                <label *ngIf="selected_edge_for_deleting">{{selected_edge_for_deleting.edge_id}}</label>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div style="padding: 10px; float: left; width: 180px;">
+            <div class="form-group">
+                <input type="submit" class="btn btn-danger"  value="Delete node" [disabled]="!selected_node_current" (click)="onDeleteNode()">
+                <label *ngIf="selected_node_current">{{selected_node_current.nodename}}</label>
+            </div>
+        </div>
+    </div>
+
     <div  style="padding: 10px; float: left;">
 
         <div class="form-group">
@@ -66,26 +85,7 @@
 
         <div class="form-group">
             <label class="form-control"  style="float: left;">Path:</label>
-            <label  style="float: left;"  *ngFor="#i of nodes_in_path">123</label>
-        </div>
-    </div>
-
-
-    <div>
-        <div style="padding: 10px; float: left; width: 180px;">
-            <div class="form-group">
-                <input type="submit" class="btn btn-danger"  value="Delete edge" [disabled]="!selected_edge_for_deleting" (click)="onDeleteEdge()">
-                <label *ngIf="selected_edge_for_deleting">{{selected_edge_for_deleting.edge_id}}</label>
-            </div>
-        </div>
-    </div>
-
-    <div>
-        <div style="padding: 10px; float: left; width: 180px;">
-            <div class="form-group">
-                <input type="submit" class="btn btn-danger"  value="Delete node" [disabled]="!selected_node_for_deleting" (click)="onDeleteNode()">
-                <label *ngIf="selected_node_for_deleting">{{selected_node_for_deleting.id}}</label>
-            </div>
+            <label  style="float: left;">{{nodes_path}}</label>
         </div>
     </div>
 
