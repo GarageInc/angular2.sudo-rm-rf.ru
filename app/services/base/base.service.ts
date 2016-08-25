@@ -14,6 +14,8 @@ interface ParamsMap<T> {
 @Injectable()
 export class BaseService {
 
+    protected GATEWAY:string;
+
     protected static GATEWAY_GRAPHS:string = "http://127.0.0.1:3000/index.php/graph";
     protected static GATEWAY_NODES:string = "http://127.0.0.1:3000/index.php/node";
     protected static GATEWAY_EDGES:string = "http://127.0.0.1:3000/index.php/edge";
@@ -24,7 +26,7 @@ export class BaseService {
 
     public setAuthParams(params:{[key:string] : string}){
 
-        params["id"] = UserState.activeUser.id;
+        params["uid"] = UserState.activeUser.id;
         params["pub_token"] = UserState.activeUser.pub_token;
 
         return params;

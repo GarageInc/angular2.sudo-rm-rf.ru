@@ -16,13 +16,15 @@ export class GraphService extends BaseService{
 
   constructor (protected http: Http) {
     super( http);
+    
+    this.GATEWAY = BaseService.GATEWAY_GRAPHS;
   }
 
   getGraphs (): Promise<Graph[]> {
 
     var params:{ [ key:string] : string} = {};
 
-    return this.get( BaseService.GATEWAY_GRAPHS+"/index",  this.setAuthParams( params))
+    return this.get( this.GATEWAY+"/index",  this.setAuthParams( params))
         .map( this.extractDataGraphs)
         .catch( this.handleError)
         .toPromise();
@@ -34,7 +36,7 @@ export class GraphService extends BaseService{
 
     params["graphname"]  = name;
 
-    return this.post( BaseService.GATEWAY_GRAPHS+"/create",  this.setAuthParams( params))
+    return this.post( this.GATEWAY+"/create",  this.setAuthParams( params))
         .map(result => result ? true : false);
   }
 
@@ -45,7 +47,7 @@ export class GraphService extends BaseService{
     params["graph_id"]  = graph.id.toString();
     params["graphname"]  = graph.graphname;
 
-    return this.post( BaseService.GATEWAY_GRAPHS+"/save",  this.setAuthParams( params))
+    return this.post( this.GATEWAY+"/save",  this.setAuthParams( params))
         .toPromise();
   }
 
@@ -54,11 +56,26 @@ export class GraphService extends BaseService{
 
     params["graph_id"]  = id;
 
-    return this.get( BaseService.GATEWAY_GRAPHS+"/structure",  this.setAuthParams( params))
+    return this.get( this.GATEWAY+"/structure",  this.setAuthParams( params))
         .map( this.extractGraphStructure)
         .toPromise();
   }
 
+  findPath(id:string,node_first_id:string, node_second_id:string){
+
+    var params:{ [ key:string] : string} = {};
+
+    params["graph_id"]  = id;
+    params["node_first_id"]  = node_first_id;
+    params["node_second_id"]  = node_second_id;
+    
+    return this.post( this.GATEWAY+"/findpath", this.setAuthParams(params))
+        .map(function(res:Response){
+          return res.json();
+        })
+        .toPromise();
+  }
+  
   protected extractDataGraphs(res: Response) {
     let body = res.json();
 

@@ -49,6 +49,13 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', "./base/base.servi
                         .map(this.extractEdgeStructure)
                         .toPromise();
                 };
+                EdgeService.prototype.delete = function (id) {
+                    var params = {};
+                    params["edge_id"] = id;
+                    return this.post(base_service_1.BaseService.GATEWAY_EDGES + "/delete", this.setAuthParams(params))
+                        .map(function (result) { return result ? true : false; })
+                        .toPromise();
+                };
                 EdgeService.prototype.extractEdgeStructure = function (res) {
                     var body = res.json();
                     var edge = new edge_1.Edge();

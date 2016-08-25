@@ -38,13 +38,21 @@ System.register(['angular2/core', '../models/graphs/node', 'angular2/http', 'rxj
                 function NodeService(http) {
                     _super.call(this, http);
                     this.http = http;
+                    this.GATEWAY = base_service_1.BaseService.GATEWAY_NODES;
                 }
                 NodeService.prototype.create = function (graph, name) {
                     var params = {};
                     params["nodename"] = name;
                     params["graph_id"] = graph.id;
-                    return this.post(base_service_1.BaseService.GATEWAY_NODES + "/create", this.setAuthParams(params))
+                    return this.post(this.GATEWAY + "/create", this.setAuthParams(params))
                         .map(this.extractNodeStructure)
+                        .toPromise();
+                };
+                NodeService.prototype.delete = function (id) {
+                    var params = {};
+                    params["node_id"] = id;
+                    return this.post(this.GATEWAY + "/delete", this.setAuthParams(params))
+                        .map(function (result) { return result ? true : false; })
                         .toPromise();
                 };
                 NodeService.prototype.extractNodeStructure = function (res) {

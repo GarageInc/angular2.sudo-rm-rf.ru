@@ -1,0 +1,50 @@
+label {
+  display: inline-block;
+  margin: .5em 0;
+  color: #607D8B;
+  font-weight: bold;
+}
+input {
+  font-size: 1em;
+  padding-left: .4em;
+}
+button {
+  margin-top: 20px;
+  font-family: Arial;
+  background-color: #eee;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer; cursor: hand;
+}
+
+.links .line_default {
+  stroke: #999;
+  stroke-opacity: 0.6;
+}
+
+.links .line_in_path {
+  stroke: red;
+  stroke-opacity: 0.6;
+}
+
+.links .line_selected {
+  stroke: orange;
+  stroke-opacity: 0.6;
+}
+
+.nodes .circle_default {
+  fill: steelblue;
+  stroke: #fff;
+  stroke-width: 3px;
+}
+.nodes .circle_for_path {
+  fill: red;
+  stroke: #fff;
+  stroke-width: 3px;
+}
+.nodes .circle_for_delete {
+  fill: red;
+  stroke: fiolet;
+  stroke-width: 3px;
+}

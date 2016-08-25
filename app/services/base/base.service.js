@@ -34,7 +34,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                     this.http = http;
                 }
                 BaseService.prototype.setAuthParams = function (params) {
-                    params["id"] = user_state_1.UserState.activeUser.id;
+                    params["uid"] = user_state_1.UserState.activeUser.id;
                     params["pub_token"] = user_state_1.UserState.activeUser.pub_token;
                     return params;
                 };

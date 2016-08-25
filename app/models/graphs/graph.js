@@ -45,6 +45,40 @@ System.register(["../base/Synchronizable", "./edge", "./node"], function(exports
                         this.edges.push(edge);
                     }
                 };
+                Graph.prototype.deleteNodeById = function (node_id) {
+                    var edges_ids = [];
+                    for (var i = 0; i < this.edges.length; i++) {
+                        if (this.edges[i].node_first_id == node_id || this.edges[i].node_second_id == node_id) {
+                            edges_ids.push(this.edges[i].id);
+                        }
+                    }
+                    for (var _i = 0, edges_ids_1 = edges_ids; _i < edges_ids_1.length; _i++) {
+                        var id = edges_ids_1[_i];
+                        this.deleteEdgeById(id);
+                    }
+                    var index = -1;
+                    for (var i = 0; i < this.nodes.length; i++) {
+                        if (this.nodes[i].id == node_id) {
+                            index = i;
+                            break;
+                        }
+                    }
+                    if (index > -1) {
+                        this.nodes.splice(index, 1);
+                    }
+                };
+                Graph.prototype.deleteEdgeById = function (edge_id) {
+                    var index = -1;
+                    for (var i = 0; i < this.edges.length; i++) {
+                        if (this.edges[i].id == edge_id) {
+                            index = i;
+                            break;
+                        }
+                    }
+                    if (index > -1) {
+                        this.edges.splice(index, 1);
+                    }
+                };
                 return Graph;
             }(Synchronizable_1.Synchronizable));
             exports_1("Graph", Graph);

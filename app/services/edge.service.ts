@@ -33,7 +33,19 @@ export class EdgeService extends BaseService{
         .toPromise();
   }
 
+  delete (  id:string) {
+
+    var params:{ [ key:string] : string} = {};
+
+    params["edge_id"] = id;
+
+    return this.post( BaseService.GATEWAY_EDGES + "/delete",  this.setAuthParams( params))
+        .map(result => result ? true : false)
+        .toPromise();
+  }
+
   protected extractEdgeStructure(res:Response){
+
     let body = res.json();
 
     var edge:Edge = new Edge()

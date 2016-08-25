@@ -15,8 +15,11 @@ import {BaseService} from "./base/base.service";
 @Injectable()
 export class NodeService extends BaseService{
 
+
   constructor (protected http: Http) {
     super( http);
+
+    this.GATEWAY = BaseService.GATEWAY_NODES;
   }
 
   create (  graph:Graph, name:string) {
@@ -26,8 +29,19 @@ export class NodeService extends BaseService{
     params["nodename"] = name;
     params["graph_id"] = graph.id;
 
-    return this.post( BaseService.GATEWAY_NODES + "/create",  this.setAuthParams( params))
+    return this.post( this.GATEWAY + "/create",  this.setAuthParams( params))
         .map(this.extractNodeStructure)
+        .toPromise();
+  }
+
+  delete (  id:string) {
+
+    var params:{ [ key:string] : string} = {};
+
+    params["node_id"] = id;
+
+    return this.post( this.GATEWAY + "/delete",  this.setAuthParams( params))
+        .map(result => result ? true : false)
         .toPromise();
   }
 

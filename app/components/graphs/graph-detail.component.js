@@ -68,7 +68,7 @@ System.register(['angular2/core', 'angular2/router', '../../models/graphs/graph'
                         selector: 'my-graph-detail',
                         templateUrl: 'app/views/graphs/graph-detail.component.html',
                         styleUrls: ['app/assets/css/graph-detail.component.css'],
-                        directives: [bar_graph_component_1.BarGraph],
+                        directives: [bar_graph_component_1.BarGraphComponent],
                     }), 
                     __metadata('design:paramtypes', [graph_service_1.GraphService, router_1.RouteParams, core_1.ElementRef])
                 ], GraphDetailComponent);

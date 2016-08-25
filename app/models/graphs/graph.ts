@@ -33,6 +33,53 @@ export class Graph extends Synchronizable {
 
       this.edges.push(edge)
     }
+  }
 
+  deleteNodeById( node_id:string) {
+
+    var edges_ids:Array<string> = [];
+
+    for( let i=0; i<this.edges.length; i++){
+      if( this.edges[i].node_first_id == node_id || this.edges[i].node_second_id == node_id){
+        edges_ids.push(this.edges[i].id)
+      }
+    }
+
+    for( let id of edges_ids){
+      this.deleteEdgeById( id);
+    }
+
+    var index = -1;
+
+    for(let i=0; i<this.nodes.length; i++){
+
+      if( this.nodes[i].id == node_id){
+
+        index = i;
+        break;
+      }
+    }
+
+    if (index > -1) {
+      this.nodes.splice(index, 1);
+    }
+  }
+
+  deleteEdgeById(edge_id:string){
+
+    var index = -1;
+
+    for(let i=0; i<this.edges.length; i++){
+
+      if( this.edges[i].id == edge_id){
+
+        index = i;
+        break;
+      }
+    }
+
+    if (index > -1) {
+      this.edges.splice(index, 1);
+    }
   }
 }

@@ -6,13 +6,13 @@ import { Graph } from '../../models/graphs/graph';
 import { GraphService } from './../../services/graph.service';
 
 import * as Moment from 'moment';
-import {BarGraph} from "../bar-graph.component";
+import {BarGraphComponent} from "../bar-graph.component";
 
 @Component({
   selector: 'my-graph-detail',
   templateUrl: 'app/views/graphs/graph-detail.component.html',
   styleUrls: ['app/assets/css/graph-detail.component.css'],
-  directives: [BarGraph],
+  directives: [BarGraphComponent],
 })
 
 export class GraphDetailComponent implements OnInit {

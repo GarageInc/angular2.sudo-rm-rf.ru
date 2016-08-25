@@ -38,10 +38,11 @@ System.register(['angular2/core', '../models/graphs/graph', 'angular2/http', 'rx
                 function GraphService(http) {
                     _super.call(this, http);
                     this.http = http;
+                    this.GATEWAY = base_service_1.BaseService.GATEWAY_GRAPHS;
                 }
                 GraphService.prototype.getGraphs = function () {
                     var params = {};
-                    return this.get(base_service_1.BaseService.GATEWAY_GRAPHS + "/index", this.setAuthParams(params))
+                    return this.get(this.GATEWAY + "/index", this.setAuthParams(params))
                         .map(this.extractDataGraphs)
                         .catch(this.handleError)
                         .toPromise();
@@ -49,21 +50,32 @@ System.register(['angular2/core', '../models/graphs/graph', 'angular2/http', 'rx
                 GraphService.prototype.create = function (name) {
                     var params = {};
                     params["graphname"] = name;
-                    return this.post(base_service_1.BaseService.GATEWAY_GRAPHS + "/create", this.setAuthParams(params))
+                    return this.post(this.GATEWAY + "/create", this.setAuthParams(params))
                         .map(function (result) { return result ? true : false; });
                 };
                 GraphService.prototype.save = function (graph) {
                     var params = {};
                     params["graph_id"] = graph.id.toString();
                     params["graphname"] = graph.graphname;
-                    return this.post(base_service_1.BaseService.GATEWAY_GRAPHS + "/save", this.setAuthParams(params))
+                    return this.post(this.GATEWAY + "/save", this.setAuthParams(params))
                         .toPromise();
                 };
                 GraphService.prototype.getGraphSctructure = function (id) {
                     var params = {};
                     params["graph_id"] = id;
-                    return this.get(base_service_1.BaseService.GATEWAY_GRAPHS + "/structure", this.setAuthParams(params))
+                    return this.get(this.GATEWAY + "/structure", this.setAuthParams(params))
                         .map(this.extractGraphStructure)
+                        .toPromise();
+                };
+                GraphService.prototype.findPath = function (id, node_first_id, node_second_id) {
+                    var params = {};
+                    params["graph_id"] = id;
+                    params["node_first_id"] = node_first_id;
+                    params["node_second_id"] = node_second_id;
+                    return this.post(this.GATEWAY + "/findpath", this.setAuthParams(params))
+                        .map(function (res) {
+                        return res.json();
+                    })
                         .toPromise();
                 };
                 GraphService.prototype.extractDataGraphs = function (res) {
