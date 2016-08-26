@@ -17,31 +17,35 @@ export class UserService extends BaseService{
 
     constructor (protected http: Http) {
         super( http);
+
+        this.GATEWAY = BaseService.GATEWAY_USER_LOGIN;
     }
 
-    public login(username:string, password:string, rememberMe: Boolean) {
+    public login(username:string, password:string, rememberMe: Boolean){
         rememberMe = !!rememberMe
 
-        let params:{ [key: string]: any; } = {};
-
-        params["password"] = password;
-        params["username"] = username;
-        params["rememberMe"] = rememberMe;
-
         return this.post(
-                BaseService.GATEWAY_USER_LOGIN,
-                params
+            this.GATEWAY
+            ,{
+                "password": password,
+                "username": username,
+                "rememberMe": rememberMe.toString()
+            }
+            ,true
             )
             .map(res => res.json())
             .map((res) => {
 
-                if (res) {
+                if (res.id && res.pub_token) {
 
                     UserState.activeUser.id = res.id;
                     UserState.activeUser.pub_token = res.pub_token;
-                }
 
-                return res;
+                    return true;
+                } else {
+
+                    return false;
+                }
             });
     }
 
@@ -62,45 +66,4 @@ export class UserService extends BaseService{
 
         return user;
     }
-
-
-    // getTitle(text:string) {
-    //     return text.match('<title>(.*)?</title>')[1];
-    // }
-    //
-    // makeCorsRequest(body:string) {
-    //     // bibliographica.org supports CORS.
-    //     var url = BaseService.GATEWAY_USER_LOGIN;
-    //
-    //     var xhr = new XMLHttpRequest();
-    //
-    //     //
-    //     //xhr.withCredentials = true;
-    //
-    //     if ("withCredentials" in xhr) {
-    //         // XHR for Chrome/Safari/Firefox.
-    //         xhr.open("POST", url, true);
-    //     } else {
-    //         // CORS not supported.
-    //         xhr = null;
-    //     }
-    //
-    //     if (!xhr) {
-    //         alert('CORS not supported');
-    //         return;
-    //     }
-    //
-    //     // Response handlers.
-    //     xhr.onload = function() {
-    //         var text = xhr.responseText;
-    //         var title = this.getTitle(text);
-    //         alert('Response from CORS request to ' + url + ': ' + title);
-    //     };
-    //
-    //     xhr.onerror = function() {
-    //         alert('Woops, there was an error making the request.');
-    //     };
-    //
-    //     xhr.send(body);
-    // }
 }

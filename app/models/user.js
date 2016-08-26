@@ -19,10 +19,10 @@ System.register(["./base/Synchronizable"], function(exports_1, context_1) {
                 function User() {
                     _super.apply(this, arguments);
                 }
+                User.prototype.reset = function () {
+                    localStorage.clear();
+                };
                 Object.defineProperty(User.prototype, "pub_token", {
-                    // protected _id: string;
-                    // protected _pub_token: string;
-                    // protected _pub_secret: string;
                     get: function () {
                         return localStorage.getItem("pub_token");
                     },

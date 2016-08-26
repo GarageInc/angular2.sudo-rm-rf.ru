@@ -44,7 +44,11 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                     headers.set('Accept', 'text/xml');
                     return headers;
                 };
-                BaseService.prototype.post = function (url, params) {
+                BaseService.prototype.post = function (url, params, tokenized) {
+                    if (tokenized === void 0) { tokenized = true; }
+                    if (tokenized == true) {
+                        params = this.setAuthParams(params);
+                    }
                     var bodyArray = [];
                     for (var key in params) {
                         var value = params[key];
@@ -57,7 +61,11 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                         headers: headers
                     });
                 };
-                BaseService.prototype.get = function (url, params) {
+                BaseService.prototype.get = function (url, params, tokenized) {
+                    if (tokenized === void 0) { tokenized = true; }
+                    if (tokenized == true) {
+                        params = this.setAuthParams(params);
+                    }
                     //
                     var get_params = new http_1.URLSearchParams();
                     for (var key in params) {

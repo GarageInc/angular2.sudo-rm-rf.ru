@@ -1,17 +1,26 @@
-<div>
-  <h2>My Graphs</h2>
+<div style="margin-top:70px;">
+  <div class="row">
+    <div class="col-md-4">
 
-  <button [routerLink]="['CreateGraph']">Create new graph</button>
+      <h2>My Graphs</h2>
 
-  <ul class="graphs">
-    <li *ngFor="#graph of graphs"
-      [class.selected]="graph === selectedGraph"
-      (click)="onSelect(graph)">
-      <span class="badge">{{graph.id}}</span> {{graph.graphname}}
-    </li>
-  </ul>
-  <div *ngIf="selectedGraph">
-    <h2>{{selectedGraph.graphname | uppercase}} is my graph</h2>
-    <button (click)="goToDetail()">View Details</button>
+      <button [routerLink]="['CreateGraph']" class="btn btn-default">Create new graph</button>
+
+      <ul class="graphs">
+        <li *ngFor="#graph of graphs"
+            [class.selected]="graph === selectedGraph"
+            (click)="onSelect(graph)"
+            style="height: 50px;">
+          <span class="badge" style="height: 50px; width:50px; padding-top: 20px;">{{graph.id}}</span> {{graph.graphname}}
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-8">
+      <div *ngIf="selectedGraph">
+        <h2>{{selectedGraph.graphname | uppercase}} is my graph</h2>
+        <button (click)="goToDetail()" class="btn btn-default">View Details</button>
+      </div>
+    </div>
   </div>
 </div>

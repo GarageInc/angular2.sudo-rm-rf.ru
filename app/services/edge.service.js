@@ -38,14 +38,15 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', "./base/base.servi
                 function EdgeService(http) {
                     _super.call(this, http);
                     this.http = http;
+                    this.GATEWAY = base_service_1.BaseService.GATEWAY_EDGES;
                 }
                 EdgeService.prototype.create = function (graph, weight, node_first_id, node_second_id) {
-                    var params = {};
-                    params["graph_id"] = graph.id;
-                    params["weight"] = weight.toString();
-                    params["node_first_id"] = node_first_id;
-                    params["node_second_id"] = node_second_id;
-                    return this.post(base_service_1.BaseService.GATEWAY_EDGES + "/create", this.setAuthParams(params))
+                    return this.post(this.GATEWAY + "/create", {
+                        "graph_id": graph.id,
+                        "weight": weight.toString(),
+                        "node_first_id": node_first_id,
+                        "node_second_id": node_second_id
+                    }, true)
                         .map(this.extractEdgeStructure)
                         .toPromise();
                 };
@@ -53,10 +54,14 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', "./base/base.servi
                     var params = {};
                     params["edge_id"] = id;
                     params["graph_id"] = graph.id;
-                    return this.post(base_service_1.BaseService.GATEWAY_EDGES + "/delete", this.setAuthParams(params))
+                    return this.post(this.GATEWAY + "/delete", {
+                        "edge_id": id,
+                        "graph_id": graph.id
+                    }, true)
                         .map(function (result) { return result ? true : false; })
                         .toPromise();
                 };
+                // UTILS
                 EdgeService.prototype.extractEdgeStructure = function (res) {
                     var body = res.json();
                     var edge = new edge_1.Edge();

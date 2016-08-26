@@ -59,7 +59,8 @@ System.register(['angular2/core', 'angular2/router', './dashboard.component', '.
         execute: function() {
             AppComponent = (function () {
                 function AppComponent() {
-                    this.title = 'Test App';
+                    this.title = '@GarageInc';
+                    this.date = 'blablabla';
                 }
                 AppComponent = __decorate([
                     core_1.Component({
@@ -92,12 +93,12 @@ System.register(['angular2/core', 'angular2/router', './dashboard.component', '.
                             component: graph_detail_component_1.GraphDetailComponent
                         },
                         {
-                            path: '/graphs',
+                            path: '/mygraphs',
                             name: 'MyGraphs',
                             component: mygraphs_component_1.MyGraphsComponent
                         },
                         {
-                            path: '/graphs/create',
+                            path: '/mygraphs/create',
                             name: 'CreateGraph',
                             component: graph_create_component_1.GraphCreateComponent
                         },

@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './services/graph.service', "./services/user.service"], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', './services/graph.service', "./services/user.service", "./models/states/user.state"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', './services/graph.service',
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, graph_service_1, user_service_1;
+    var core_1, router_1, graph_service_1, user_service_1, user_state_1;
     var DashboardComponent;
     return {
         setters:[
@@ -25,6 +25,9 @@ System.register(['angular2/core', 'angular2/router', './services/graph.service',
             },
             function (user_service_1_1) {
                 user_service_1 = user_service_1_1;
+            },
+            function (user_state_1_1) {
+                user_state_1 = user_state_1_1;
             }],
         execute: function() {
             DashboardComponent = (function () {
@@ -42,6 +45,14 @@ System.register(['angular2/core', 'angular2/router', './services/graph.service',
                 DashboardComponent.prototype.goToDetail = function (graph) {
                     var link = ['GraphDetail', { id: graph.id }];
                     this._router.navigate(link);
+                };
+                DashboardComponent.prototype.userIsOwnerGraph = function (graph) {
+                    if (user_state_1.UserState.activeUser && user_state_1.UserState.activeUser.id == graph.user_id) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
                 };
                 DashboardComponent = __decorate([
                     core_1.Component({

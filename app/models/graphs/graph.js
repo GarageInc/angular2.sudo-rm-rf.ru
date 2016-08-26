@@ -27,6 +27,11 @@ System.register(["../base/Synchronizable", "./edge", "./node"], function(exports
                     this.nodes = [];
                     this.edges = [];
                 }
+                Graph.prototype.fillStructure = function (body) {
+                    this.fillFromJSON(body);
+                    this.fillNodes(body.nodes);
+                    this.fillEdges(body.edges);
+                };
                 Graph.prototype.fillNodes = function (json_nodes) {
                     this.nodes = [];
                     for (var _i = 0, json_nodes_1 = json_nodes; _i < json_nodes_1.length; _i++) {

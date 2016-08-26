@@ -22,14 +22,12 @@ export class GraphCreateComponent{
 
 
   onCreate(){
-    this._graphService.create( this.name).subscribe( (result) => {
-
-      console.log("Result: " + result)
+    this._graphService.create( this.name).then( (result) => {
 
       if (result) {
         this._router.navigate(['Dashboard']);
       } else {
-        alert("Не удалось создать!")
+        alert("Can't create graph!")
       }
     });
   }

@@ -7,7 +7,6 @@
 	box-sizing: border-box;
 }
 h3 {
-  text-align: center; margin-bottom: 0;
 }
 [class*='col-'] {
   padding-right: 20px;
@@ -27,9 +26,10 @@ h3 {
 	text-align: center;
 	color: #eee;
 	max-height: 120px;
-	min-width: 120px;
 	background-color: #607D8B;
 	border-radius: 2px;
+	min-width: 200px;
+	min-height: 90px;
 }
 h4 {
   position: relative;

@@ -1,4 +1,4 @@
-import { Component } from 'angular2/core';
+import {Component, ViewEncapsulation} from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
 
 import { DashboardComponent } from './dashboard.component';
@@ -48,12 +48,12 @@ import {EdgeService} from "./services/edge.service";
         component: GraphDetailComponent
     },
     {
-        path: '/graphs',
+        path: '/mygraphs',
         name: 'MyGraphs',
         component: MyGraphsComponent
     },
     {
-        path: '/graphs/create',
+        path: '/mygraphs/create',
         name: 'CreateGraph',
         component: GraphCreateComponent
     },
@@ -75,5 +75,6 @@ import {EdgeService} from "./services/edge.service";
 ])
 
 export class AppComponent {
-  title = 'Test App';
+  title = '@GarageInc';
+  date = 'blablabla'
 }

@@ -1,92 +1,98 @@
-<div  style="    height: 240px;width: 400px; padding: 10px; float: left;  padding: 10px 10px; border-radius: 5px; float:left;" >
-    <div class="form-group">
-        <input class="form-control" [(ngModel)]="new_node_name" placeholder="Node name" type="text" maxlength="250" >
+
+<div class="row bar-graph-container">
+
+    <div class="col-md-8 left-side border" style="height: 100%; margin: 10px 0px 10px 0px;">
+        <svg   style="width: 100%; height: 600px; ">
+
+        </svg>
     </div>
 
-    <div class="form-group">
-        <button type="submit" (click)="onAddNode()" class="btn btn-success">Add node</button>
-    </div>
-</div>
+    <div class="col-md-4 right-side" style="margin-top:10px; overflow-y: auto; height:600px;">
 
-<div style="     height: 240px;   width: 400px; padding: 10px; float: left;  padding: 10px 10px; border-radius: 5px; float:left; ">
-    <div class="form-group">
-        <input  class="form-control" placeholder="Edge weight" [(ngModel)]="edge_weight" type="number" maxlength="250" required>
-    </div>
+        <div *ngIf="isGraphOwner">
 
-    <div class="form-group">
-        <select [ngModel]="selected_node_first" (ngModelChange)="onSelectFirstNode($event)" class="form-control">
-            <option [ngValue]="i" *ngFor="#i of graph_nodes">{{i.nodename}}</option>
-        </select>
-    </div>
+            <div class="border">
+                <div class="form-group">
+                    <input class="form-control" [(ngModel)]="new_node_name" placeholder="Node name" type="text" maxlength="250" >
+                </div>
 
-    <div class="form-group">
-        <select [ngModel]="selected_node_second" (ngModelChange)="onSelectSecondNode($event)" class="form-control">
-            <option [ngValue]="i" *ngFor="#i of graph_nodes">{{i.nodename}}</option>
-        </select>
-    </div>
+                <div class="form-group">
+                    <button type="submit" (click)="onAddNode()" class="btn btn-success">Add node</button>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <button (click)="onAddEdge()" class="btn btn-success">Add edge</button>
-    </div>
-</div>
+            <div class="border">
+                <div class="form-group">
+                    <input  class="form-control" placeholder="Edge weight" [(ngModel)]="edge_weight" type="number" maxlength="250" required>
+                </div>
 
-<div style="float: left;">
-    <svg width="900" height="600" style="    border: 1px solid rgba(0, 0, 0, .2); border-radius: 5px; "></svg>
-</div>
+                <div class="form-group">
+                    <select [ngModel]="selected_node_first" (ngModelChange)="onSelectFirstNode($event)" class="form-control">
+                        <option [ngValue]="i" *ngFor="#i of graph_nodes">{{i.nodename}}</option>
+                    </select>
+                </div>
 
-<div style="width: 300px; padding: 10px; float: left;  padding: 10px 10px; border-radius: 5px; float:left; ">
+                <div class="form-group">
+                    <select [ngModel]="selected_node_second" (ngModelChange)="onSelectSecondNode($event)" class="form-control">
+                        <option [ngValue]="i" *ngFor="#i of graph_nodes">{{i.nodename}}</option>
+                    </select>
+                </div>
 
-    <div>
-        <div style="padding: 10px; float: left; width: 180px;">
+                <div class="form-group">
+                    <button (click)="onAddEdge()" class="btn btn-success">Add edge</button>
+                </div>
+            </div>
+
+
+            <div class="border">
+                <div class="form-group">
+                    <input type="submit" class="btn btn-danger"  value="Delete edge" [disabled]="!selected_edge_for_deleting" (click)="onDeleteEdge()">
+                    <label *ngIf="selected_edge_for_deleting">[{{selected_edge_for_deleting.edge_id}}]</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-danger"  value="Delete node" [disabled]="!selected_node_current" (click)="onDeleteNode()">
+                    <label *ngIf="selected_node_current">[{{selected_node_current.nodename}}]</label>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="border">
+
             <div class="form-group">
-                <input type="submit" class="btn btn-danger"  value="Delete edge" [disabled]="!selected_edge_for_deleting" (click)="onDeleteEdge()">
-                <label *ngIf="selected_edge_for_deleting">{{selected_edge_for_deleting.edge_id}}</label>
+                <label>Find path between:</label>
+            </div>
+
+            <div class="form-group">
+                <select [ngModel]="selected_node_first" (ngModelChange)="onSelectFirstNode($event)" class="form-control">
+                    <option [ngValue]="i" *ngFor="#i of graph_nodes">{{i.nodename}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <select [ngModel]="selected_node_second" (ngModelChange)="onSelectSecondNode($event)" class="form-control">
+                    <option [ngValue]="i" *ngFor="#i of graph_nodes">{{i.nodename}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success" (click)="onFindPath()">Find path</button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-control" >Length:</label>
+                <label >{{length_between_nodes}}</label>
+            </div>
+
+            <div class="form-group">
+                <label class="form-control">Path:</label>
+                <label>{{nodes_path}}</label>
             </div>
         </div>
+
+
+
     </div>
-
-    <div>
-        <div style="padding: 10px; float: left; width: 180px;">
-            <div class="form-group">
-                <input type="submit" class="btn btn-danger"  value="Delete node" [disabled]="!selected_node_current" (click)="onDeleteNode()">
-                <label *ngIf="selected_node_current">{{selected_node_current.nodename}}</label>
-            </div>
-        </div>
-    </div>
-
-    <div  style="padding: 10px; float: left;">
-
-        <div class="form-group">
-            <label>Find path between:</label>
-        </div>
-
-        <div class="form-group">
-            <select [ngModel]="selected_node_first" (ngModelChange)="onSelectFirstNode($event)" class="form-control">
-                <option [ngValue]="i" *ngFor="#i of graph_nodes">{{i.nodename}}</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <select [ngModel]="selected_node_second" (ngModelChange)="onSelectSecondNode($event)" class="form-control">
-                <option [ngValue]="i" *ngFor="#i of graph_nodes">{{i.nodename}}</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <button type="submit" class="btn btn-success" (click)="onFindPath()">Find path</button>
-        </div>
-    </div>
-
-    <div style="padding: 10px; float: left; width: 180px;">
-        <div class="form-group">
-            <label class="form-control" style="float: left;">Length:</label>
-            <label style="float: left;">{{length_between_nodes}}</label>
-        </div>
-
-        <div class="form-group">
-            <label class="form-control"  style="float: left;">Path:</label>
-            <label  style="float: left;">{{nodes_path}}</label>
-        </div>
-    </div>
-
 </div>

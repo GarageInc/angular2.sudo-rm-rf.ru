@@ -10,7 +10,9 @@ System.register([], function(exports_1, context_1) {
                 }
                 Synchronizable.prototype.fillFromJSON = function (jsonObj) {
                     for (var propName in jsonObj) {
-                        this[propName] = jsonObj[propName];
+                        if (typeof this[propName] !== 'object') {
+                            this[propName] = jsonObj[propName];
+                        }
                     }
                 };
                 return Synchronizable;

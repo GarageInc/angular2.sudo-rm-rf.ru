@@ -12,30 +12,35 @@ import { UserService } from './services/user.service';
 
 export class LoggedInRouterOutlet extends RouterOutlet {
 
-    publicRoutes: Array<string>;
-    private parentRouter: Router;
+    protected routeNames: Array<string>;
+    protected parentRouter: Router;
 
     constructor(
-        _elementRef: ElementRef, _loader: DynamicComponentLoader,
-        _parentRouter: Router, @Attribute('name') nameAttr: string,
+        _elementRef: ElementRef,
+        _loader: DynamicComponentLoader,
+        _parentRouter: Router,
+        @Attribute('name') nameAttr: string,
         protected userService: UserService
     ) {
         super(_elementRef, _loader, _parentRouter, nameAttr);
 
         this.parentRouter = _parentRouter;
-        this.publicRoutes = ['', 'login', 'signup'];
+        this.routeNames = ['', 'Login', 'Dashboard','GraphDetail'];
     }
 
     activate(instruction: ComponentInstruction) {
 
-        if (this._canActivate( instruction.urlPath)) {
+        console.log(instruction)
+        if (this._canActivate( instruction.routeName)) {
             return super.activate(instruction);
         }
 
         this.parentRouter.navigate(['Login']);
     }
 
-    _canActivate(url:string) {
-        return this.publicRoutes.indexOf(url) !== -1 || this.userService.isAuthenticated();
+    _canActivate(routeName:string) {
+        // console.log(url)
+        // console.log(this.publicRoutes.indexOf(url))
+        return this.routeNames.indexOf(routeName) !== -1 || this.userService.isAuthenticated();
     }
 }

@@ -15,36 +15,33 @@ import {BaseService} from "./base/base.service";
 @Injectable()
 export class NodeService extends BaseService{
 
-
   constructor (protected http: Http) {
     super( http);
 
     this.GATEWAY = BaseService.GATEWAY_NODES;
   }
 
-  create (  graph:Graph, name:string) {
+  create (  graph:Graph, name:string):Promise<Node> {
 
-    var params:{ [ key:string] : string} = {};
-
-    params["nodename"] = name;
-    params["graph_id"] = graph.id;
-
-    return this.post( this.GATEWAY + "/create",  this.setAuthParams( params))
+    return this.post( this.GATEWAY + "/create", {
+      "nodename": name,
+      "graph_id": graph.id
+    }, true)
         .map(this.extractNodeStructure)
         .toPromise();
   }
 
-  delete ( graph:Graph, id:string) {
+  delete ( graph:Graph, id:string):Promise<Boolean> {
 
-    var params:{ [ key:string] : string} = {};
-
-    params["node_id"] = id;
-    params["graph_id"] = graph.id;
-
-    return this.post( this.GATEWAY + "/delete",  this.setAuthParams( params))
+    return this.post( this.GATEWAY + "/delete", {
+      "node_id": id,
+      "graph_id": graph.id
+    }, true)
         .map(result => result ? true : false)
         .toPromise();
   }
+
+  // UTILS
 
   protected extractNodeStructure(res:Response){
     let body = res.json();

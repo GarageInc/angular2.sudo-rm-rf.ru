@@ -1,4 +1,4 @@
-System.register(['angular2/core', "../services/graph.service", "../services/node.service", "../services/edge.service"], function(exports_1, context_1) {
+System.register(['angular2/core', "../services/graph.service", "../services/node.service", "../services/edge.service", "../models/states/user.state"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', "../services/graph.service", "../services/node
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, graph_service_1, node_service_1, edge_service_1;
+    var core_1, graph_service_1, node_service_1, edge_service_1, user_state_1;
     var BarGraphComponent;
     return {
         setters:[
@@ -25,6 +25,9 @@ System.register(['angular2/core', "../services/graph.service", "../services/node
             },
             function (edge_service_1_1) {
                 edge_service_1 = edge_service_1_1;
+            },
+            function (user_state_1_1) {
+                user_state_1 = user_state_1_1;
             }],
         execute: function() {
             BarGraphComponent = (function () {
@@ -78,7 +81,10 @@ System.register(['angular2/core', "../services/graph.service", "../services/node
                 });
                 BarGraphComponent.prototype.build = function () {
                     var svg = d3.select("svg");
-                    var width = +svg.attr("width"), height = +svg.attr("height");
+                    console.log(svg);
+                    var width = parseInt(svg.style("width")), height = parseInt(svg.style("height"));
+                    console.log("width: " + width);
+                    console.log("height: " + height);
                     svg.selectAll("*").remove();
                     var color = d3.scaleOrdinal(d3.schemeCategory20);
                     var simulation = d3.forceSimulation()
@@ -234,8 +240,13 @@ System.register(['angular2/core', "../services/graph.service", "../services/node
                     var _this = this;
                     this._nodeService.create(this.graph, this.new_node_name)
                         .then(function (result) {
-                        _this.graph.nodes.push(result);
-                        _this.build();
+                        if (result) {
+                            _this.graph.nodes.push(result);
+                            _this.build();
+                        }
+                        else {
+                            alert("Error by creating new node!");
+                        }
                     }, function (error) { return alert("Rejected: " + error.message); });
                 };
                 BarGraphComponent.prototype.onAddEdge = function () {
@@ -246,8 +257,13 @@ System.register(['angular2/core', "../services/graph.service", "../services/node
                     else {
                         this._edgeService.create(this.graph, this.edge_weight, this.selected_node_first.id, this.selected_node_second.id)
                             .then(function (result) {
-                            _this.graph.edges.push(result);
-                            _this.build();
+                            if (result) {
+                                _this.graph.edges.push(result);
+                                _this.build();
+                            }
+                            else {
+                                alert("Error by creating new edge!");
+                            }
                         }, function (error) { return alert("Rejected: " + error.message); });
                     }
                 };
@@ -261,21 +277,31 @@ System.register(['angular2/core', "../services/graph.service", "../services/node
                     var _this = this;
                     this._edgeService.delete(this.graph, this.selected_edge_for_deleting.edge_id)
                         .then(function (result) {
-                        _this.graph.deleteEdgeById(_this.selected_edge_for_deleting.edge_id);
-                        _this.build();
+                        if (result) {
+                            _this.graph.deleteEdgeById(_this.selected_edge_for_deleting.edge_id);
+                            _this.build();
+                        }
+                        else {
+                            alert("Error by deleting edge!");
+                        }
                     }, function (error) { return alert("Rejected: " + error.message); });
                 };
                 BarGraphComponent.prototype.onDeleteNode = function () {
                     var _this = this;
                     this._nodeService.delete(this.graph, this.selected_node_current.id)
                         .then(function (result) {
-                        _this.graph.deleteNodeById(_this.selected_node_current.id);
-                        _this.build();
+                        if (result) {
+                            _this.graph.deleteNodeById(_this.selected_node_current.id);
+                            _this.build();
+                        }
+                        else {
+                            alert("Error by adding!");
+                        }
                     }, function (error) { return alert("Rejected: " + error.message); });
                 };
                 BarGraphComponent.prototype.onFindPath = function () {
                     var _this = this;
-                    this._graphService.findPath(this.graph, this.selected_node_first.id, this.selected_node_second.id)
+                    this._graphService.findpath(this.graph, this.selected_node_first.id, this.selected_node_second.id)
                         .then(function (result) {
                         _this.edges_in_path = new Array();
                         _this.nodes_path = "";
@@ -310,14 +336,23 @@ System.register(['angular2/core', "../services/graph.service", "../services/node
                         _this.build();
                     }, function (error) { return alert("Rejected: " + error.message); });
                 };
+                Object.defineProperty(BarGraphComponent.prototype, "isGraphOwner", {
+                    get: function () {
+                        return this.graph.user_id == user_state_1.UserState.activeUser.id;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 BarGraphComponent.prototype.__render = function (newValue) {
-                    console.log("__render");
                     if (!newValue)
                         return;
+                    if (this.graph_nodes.length > 0) {
+                        this.setSelectedNodeFirst(this.graph_nodes[0]);
+                        this.setSelectedNodeSecond(this.graph_nodes[0]);
+                    } // pass
                     this.build();
                 };
                 BarGraphComponent.prototype.ngOnChanges = function (changes) {
-                    console.log("ngOnChange");
                     this.__render(this.graph);
                 };
                 BarGraphComponent = __decorate([

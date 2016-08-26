@@ -8,6 +8,7 @@ import {GraphService} from "../services/graph.service";
 import {NodeService} from "../services/node.service";
 import {EdgeService} from "../services/edge.service";
 import {Response} from "angular2/http";
+import {UserState} from "../models/states/user.state";
 // import * as d3 from 'd3';
 
 declare var d3:any;
@@ -91,8 +92,12 @@ export class BarGraphComponent
     protected build(){
 
         var svg = d3.select("svg");
-        var width = +svg.attr("width"),
-            height = +svg.attr("height");
+        console.log(svg)
+        var width = parseInt(svg.style("width")),
+            height = parseInt(svg.style("height"));
+
+        console.log("width: " + width)
+        console.log("height: " + height)
 
         svg.selectAll("*").remove();
 
@@ -127,7 +132,7 @@ export class BarGraphComponent
 
             return item;
         });
-        
+
         var link = svg.append("g")
             .attr("class", "links")
             .selectAll("line")
@@ -304,8 +309,14 @@ export class BarGraphComponent
         this._nodeService.create(this.graph, this.new_node_name)
             .then(
                 result => {
-                    this.graph.nodes.push( result as Node);
-                    this.build();
+                    if(result){
+
+                        this.graph.nodes.push( result as Node);
+                        this.build();
+                    } else {
+
+                        alert("Error by creating new node!")
+                    }
                 },
                 error => alert("Rejected: " + error.message)
             );
@@ -314,14 +325,21 @@ export class BarGraphComponent
     onAddEdge(){
 
         if(!this.selected_node_first || !this.selected_node_second){
+
             alert("Not selected nodes!")
         } else {
 
             this._edgeService.create(this.graph, this.edge_weight, this.selected_node_first.id, this.selected_node_second.id)
                 .then(
                     result => {
-                        this.graph.edges.push( result as Edge);
-                        this.build();
+                        if(result){
+
+                            this.graph.edges.push( result as Edge);
+                            this.build();
+                        } else {
+
+                            alert("Error by creating new edge!")
+                        }
                     },
                     error => alert("Rejected: " + error.message)
                 )
@@ -345,9 +363,15 @@ export class BarGraphComponent
             .then(
                 result=>{
 
-                    this.graph.deleteEdgeById(this.selected_edge_for_deleting.edge_id)
+                    if(result){
 
-                    this.build();
+                        this.graph.deleteEdgeById(this.selected_edge_for_deleting.edge_id)
+
+                        this.build();
+                    } else {
+
+                        alert("Error by deleting edge!")
+                    }
                 },
                 error => alert("Rejected: " + error.message)
             );
@@ -358,9 +382,15 @@ export class BarGraphComponent
         this._nodeService.delete( this.graph, this.selected_node_current.id)
             .then(
                 result=>{
-                    this.graph.deleteNodeById(this.selected_node_current.id);
 
-                    this.build();
+                    if(result){
+
+                        this.graph.deleteNodeById(this.selected_node_current.id);
+
+                        this.build();
+                    } else {
+                        alert("Error by adding!")
+                    }
                 },
                 error => alert("Rejected: " + error.message)
             )
@@ -372,7 +402,7 @@ export class BarGraphComponent
 
     onFindPath(){
 
-        this._graphService.findPath(this.graph, this.selected_node_first.id, this.selected_node_second.id)
+        this._graphService.findpath(this.graph, this.selected_node_first.id, this.selected_node_second.id)
             .then(
                 result=>{
 
@@ -425,20 +455,28 @@ export class BarGraphComponent
             )
     }
 
+    public get isGraphOwner():Boolean{
+
+        return this.graph.user_id == UserState.activeUser.id;
+    }
+
     protected __render(newValue: Graph): void
     {
-        console.log("__render")
-
         if( !newValue )
             return;
+
+        if(this.graph_nodes.length > 0){
+
+            this.setSelectedNodeFirst(this.graph_nodes[0]);
+            this.setSelectedNodeSecond(this.graph_nodes[0]);
+
+        }// pass
 
         this.build();
     }
 
     protected ngOnChanges( changes: { [propertyName: string]: SimpleChange } ): void
     {
-
-        console.log("ngOnChange")
         this.__render( this.graph );
     }
 }

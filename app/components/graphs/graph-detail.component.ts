@@ -7,6 +7,7 @@ import { GraphService } from './../../services/graph.service';
 
 import * as Moment from 'moment';
 import {BarGraphComponent} from "../bar-graph.component";
+import {UserState} from "../../models/states/user.state";
 
 @Component({
   selector: 'my-graph-detail',
@@ -25,6 +26,11 @@ export class GraphDetailComponent implements OnInit {
     protected element: ElementRef) {
   }
 
+  public get isGraphOwner():Boolean{
+
+    return this.graph.user_id == UserState.activeUser.id;
+  }
+
   ngOnInit() {
 
     this.graph.id = this._routeParams.get('id')
@@ -33,7 +39,7 @@ export class GraphDetailComponent implements OnInit {
 
   loadGraphStructure(){
 
-    this._graphService.getGraphSctructure(this.graph.id)
+    this._graphService.structure(this.graph.id)
         .then(graph => this.graph = graph);
   }
 

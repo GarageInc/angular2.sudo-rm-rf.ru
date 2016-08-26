@@ -38,16 +38,19 @@ System.register(['angular2/core', 'angular2/router', './services/user.service'],
                     _super.call(this, _elementRef, _loader, _parentRouter, nameAttr);
                     this.userService = userService;
                     this.parentRouter = _parentRouter;
-                    this.publicRoutes = ['', 'login', 'signup'];
+                    this.routeNames = ['', 'Login', 'Dashboard', 'GraphDetail'];
                 }
                 LoggedInRouterOutlet.prototype.activate = function (instruction) {
-                    if (this._canActivate(instruction.urlPath)) {
+                    console.log(instruction);
+                    if (this._canActivate(instruction.routeName)) {
                         return _super.prototype.activate.call(this, instruction);
                     }
                     this.parentRouter.navigate(['Login']);
                 };
-                LoggedInRouterOutlet.prototype._canActivate = function (url) {
-                    return this.publicRoutes.indexOf(url) !== -1 || this.userService.isAuthenticated();
+                LoggedInRouterOutlet.prototype._canActivate = function (routeName) {
+                    // console.log(url)
+                    // console.log(this.publicRoutes.indexOf(url))
+                    return this.routeNames.indexOf(routeName) !== -1 || this.userService.isAuthenticated();
                 };
                 LoggedInRouterOutlet = __decorate([
                     core_1.Directive({

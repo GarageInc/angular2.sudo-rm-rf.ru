@@ -41,21 +41,22 @@ System.register(['angular2/core', '../models/graphs/node', 'angular2/http', 'rxj
                     this.GATEWAY = base_service_1.BaseService.GATEWAY_NODES;
                 }
                 NodeService.prototype.create = function (graph, name) {
-                    var params = {};
-                    params["nodename"] = name;
-                    params["graph_id"] = graph.id;
-                    return this.post(this.GATEWAY + "/create", this.setAuthParams(params))
+                    return this.post(this.GATEWAY + "/create", {
+                        "nodename": name,
+                        "graph_id": graph.id
+                    }, true)
                         .map(this.extractNodeStructure)
                         .toPromise();
                 };
                 NodeService.prototype.delete = function (graph, id) {
-                    var params = {};
-                    params["node_id"] = id;
-                    params["graph_id"] = graph.id;
-                    return this.post(this.GATEWAY + "/delete", this.setAuthParams(params))
+                    return this.post(this.GATEWAY + "/delete", {
+                        "node_id": id,
+                        "graph_id": graph.id
+                    }, true)
                         .map(function (result) { return result ? true : false; })
                         .toPromise();
                 };
+                // UTILS
                 NodeService.prototype.extractNodeStructure = function (res) {
                     var body = res.json();
                     var node = new node_1.Node();

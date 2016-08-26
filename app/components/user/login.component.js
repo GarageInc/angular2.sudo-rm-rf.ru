@@ -36,7 +36,7 @@ System.register(['angular2/core', 'angular2/router', './../../services/user.serv
                             _this.router.navigate(['Dashboard']);
                         }
                         else {
-                            alert("Не удалось авторизоваться");
+                            alert("Fail to registration: ckeck your name!");
                         }
                     });
                 };

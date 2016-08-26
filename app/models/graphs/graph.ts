@@ -5,9 +5,20 @@ import {Node} from "./node";
 export class Graph extends Synchronizable {
   id: string;
   graphname: string;
+  user_id: string;
 
   nodes: Array<Node> = [];
   edges: Array<Edge> = [];
+
+
+  fillStructure(body:any){
+
+    this.fillFromJSON(body);
+
+    this.fillNodes( body.nodes)
+    this.fillEdges( body.edges)
+
+  }
 
   fillNodes( json_nodes:any){
     this.nodes = [];

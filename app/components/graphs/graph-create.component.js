@@ -32,13 +32,12 @@ System.register(['angular2/core', 'angular2/router', './../../services/graph.ser
                 }
                 GraphCreateComponent.prototype.onCreate = function () {
                     var _this = this;
-                    this._graphService.create(this.name).subscribe(function (result) {
-                        console.log("Result: " + result);
+                    this._graphService.create(this.name).then(function (result) {
                         if (result) {
                             _this._router.navigate(['Dashboard']);
                         }
                         else {
-                            alert("Не удалось создать!");
+                            alert("Can't create graph!");
                         }
                     });
                 };

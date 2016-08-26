@@ -41,21 +41,25 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx', "./base/base.servi
                 function UserService(http) {
                     _super.call(this, http);
                     this.http = http;
+                    this.GATEWAY = base_service_1.BaseService.GATEWAY_USER_LOGIN;
                 }
                 UserService.prototype.login = function (username, password, rememberMe) {
                     rememberMe = !!rememberMe;
-                    var params = {};
-                    params["password"] = password;
-                    params["username"] = username;
-                    params["rememberMe"] = rememberMe;
-                    return this.post(base_service_1.BaseService.GATEWAY_USER_LOGIN, params)
+                    return this.post(this.GATEWAY, {
+                        "password": password,
+                        "username": username,
+                        "rememberMe": rememberMe.toString()
+                    }, true)
                         .map(function (res) { return res.json(); })
                         .map(function (res) {
-                        if (res) {
+                        if (res.id && res.pub_token) {
                             user_state_1.UserState.activeUser.id = res.id;
                             user_state_1.UserState.activeUser.pub_token = res.pub_token;
+                            return true;
                         }
-                        return res;
+                        else {
+                            return false;
+                        }
                     });
                 };
                 UserService.prototype.logout = function () {

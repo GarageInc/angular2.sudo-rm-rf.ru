@@ -13,7 +13,7 @@ System.register(["../user"], function(exports_1, context_1) {
                 function UserState() {
                 }
                 UserState.reset = function () {
-                    this.activeUser = new user_1.User();
+                    this.activeUser.reset();
                 };
                 ;
                 UserState.activeUser = new user_1.User();

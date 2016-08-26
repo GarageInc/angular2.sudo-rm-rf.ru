@@ -1,8 +1,16 @@
-<h3>Top Graphs</h3>
+<div style="margin-top: 70px;">
+  <h3>All graphs</h3>
+</div>
 <div class="grid grid-pad">
   <div *ngFor="#graph of graphs" (click)="goToDetail(graph)" class="col-1-4">
-    <div class="module graph">
-      <h4>{{graph.graphname}}</h4>
+    <div class="module graph ">
+      <div style="float: left; margin-right: 10px; width: 200px;">
+        <h4>{{graph.graphname}}: nodes({{graph.nodes.length}}), edges({{graph.edges.length}})</h4>
+      </div>
+      <div *ngIf="userIsOwnerGraph(graph)">
+        <img  src="../app/assets/imgs/graphs/yes.png"/>
+        [your]
+      </div>
     </div>
   </div>
 </div>

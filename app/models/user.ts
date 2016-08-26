@@ -1,9 +1,10 @@
 import {Synchronizable} from "./base/Synchronizable";
 
 export class User extends Synchronizable {
-    // protected _id: string;
-    // protected _pub_token: string;
-    // protected _pub_secret: string;
+
+    reset(){
+        localStorage.clear()
+    }
 
     get pub_token():string {
         return localStorage.getItem("pub_token");

@@ -17,18 +17,18 @@ export class EdgeService extends BaseService{
 
   constructor (protected http: Http) {
     super( http);
+
+    this.GATEWAY = BaseService.GATEWAY_EDGES;
   }
 
-  create (  graph:Graph, weight:number, node_first_id:string, node_second_id:string) {
+  create (  graph:Graph, weight:number, node_first_id:string, node_second_id:string):Promise<Edge>{
 
-    var params:{ [ key:string] : string} = {};
-
-    params["graph_id"] = graph.id;
-    params["weight"] = weight.toString();
-    params["node_first_id"] = node_first_id;
-    params["node_second_id"] = node_second_id;
-
-    return this.post( BaseService.GATEWAY_EDGES + "/create",  this.setAuthParams( params))
+    return this.post( this.GATEWAY + "/create",{
+      "graph_id": graph.id,
+      "weight": weight.toString(),
+      "node_first_id": node_first_id,
+      "node_second_id": node_second_id
+    }, true)
         .map( this.extractEdgeStructure)
         .toPromise();
   }
@@ -40,10 +40,15 @@ export class EdgeService extends BaseService{
     params["edge_id"] = id;
       params["graph_id"] = graph.id;
 
-    return this.post( BaseService.GATEWAY_EDGES + "/delete",  this.setAuthParams( params))
+    return this.post( this.GATEWAY + "/delete",  {
+      "edge_id": id,
+      "graph_id": graph.id
+    }, true)
         .map(result => result ? true : false)
         .toPromise();
   }
+
+  // UTILS
 
   protected extractEdgeStructure(res:Response){
 

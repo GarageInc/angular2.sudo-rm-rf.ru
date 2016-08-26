@@ -22,10 +22,10 @@ export class LoginComponent {
     onLogin() {
 
         this.userService.login(this.username, this.password, this.rememberme).subscribe((result) => {
-            if (result) {
+            if ( result) {
                 this.router.navigate(['Dashboard']);
             } else {
-                alert("Не удалось авторизоваться")
+                alert("Fail to registration: ckeck your name!")
             }
         });
     }

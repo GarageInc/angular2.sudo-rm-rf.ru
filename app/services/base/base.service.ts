@@ -7,10 +7,6 @@ import { Observable }     from 'rxjs/Observable';
 import 'rxjs/Rx';
 import {UserState} from "../../models/states/user.state";
 
-interface ParamsMap<T> {
-    [K: string]: T;
-}
-
 @Injectable()
 export class BaseService {
 
@@ -41,7 +37,11 @@ export class BaseService {
         return headers;
     }
 
-    protected post(url:string, params:{ [key: string] : string; }){
+    protected post(url:string, params:{ [key: string] : string; }, tokenized:Boolean = true){
+
+        if( tokenized == true){
+            params = this.setAuthParams( params)
+        }
 
         let bodyArray:Array<string> = [];
 
@@ -64,8 +64,11 @@ export class BaseService {
             )
     }
 
-    protected get(url:string, params:{ [key: string] : string; }){
+    protected get(url:string, params:{ [key: string] : string; }, tokenized:Boolean = true ){
 
+        if( tokenized == true){
+            params = this.setAuthParams( params)
+        }
         //
         let get_params: URLSearchParams = new URLSearchParams();
 

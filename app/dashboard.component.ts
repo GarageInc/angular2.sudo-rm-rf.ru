@@ -4,6 +4,7 @@ import { Router } from 'angular2/router';
 import { Graph } from './models/graphs/graph';
 import { GraphService } from './services/graph.service';
 import {UserService} from "./services/user.service";
+import {UserState} from "./models/states/user.state";
 
 @Component({
   selector: 'my-dashboard',
@@ -30,5 +31,13 @@ export class DashboardComponent implements OnInit {
   goToDetail(graph: Graph) {
     let link = ['GraphDetail', { id: graph.id }];
     this._router.navigate( link);
+  }
+
+  userIsOwnerGraph(graph:Graph){
+    if( UserState.activeUser && UserState.activeUser.id == graph.user_id){
+      return true;
+    } else {
+      return false;
+    }
   }
 }

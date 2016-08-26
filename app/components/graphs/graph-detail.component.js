@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../../models/graphs/graph', './../../services/graph.service', "../bar-graph.component"], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../../models/graphs/graph', './../../services/graph.service', "../bar-graph.component", "../../models/states/user.state"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', '../../models/graphs/graph'
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, graph_1, graph_service_1, bar_graph_component_1;
+    var core_1, router_1, graph_1, graph_service_1, bar_graph_component_1, user_state_1;
     var GraphDetailComponent;
     return {
         setters:[
@@ -28,6 +28,9 @@ System.register(['angular2/core', 'angular2/router', '../../models/graphs/graph'
             },
             function (bar_graph_component_1_1) {
                 bar_graph_component_1 = bar_graph_component_1_1;
+            },
+            function (user_state_1_1) {
+                user_state_1 = user_state_1_1;
             }],
         execute: function() {
             GraphDetailComponent = (function () {
@@ -37,13 +40,20 @@ System.register(['angular2/core', 'angular2/router', '../../models/graphs/graph'
                     this.element = element;
                     this.graph = new graph_1.Graph();
                 }
+                Object.defineProperty(GraphDetailComponent.prototype, "isGraphOwner", {
+                    get: function () {
+                        return this.graph.user_id == user_state_1.UserState.activeUser.id;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 GraphDetailComponent.prototype.ngOnInit = function () {
                     this.graph.id = this._routeParams.get('id');
                     this.loadGraphStructure();
                 };
                 GraphDetailComponent.prototype.loadGraphStructure = function () {
                     var _this = this;
-                    this._graphService.getGraphSctructure(this.graph.id)
+                    this._graphService.structure(this.graph.id)
                         .then(function (graph) { return _this.graph = graph; });
                 };
                 GraphDetailComponent.prototype.onSave = function () {
