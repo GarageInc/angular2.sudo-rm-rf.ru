@@ -97,10 +97,10 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', 'rxjs/Rx',
                     // this.router.navigate(['Dashboard']);
                     return Observable_1.Observable.throw(errMsg);
                 };
-                BaseService.GATEWAY_GRAPHS = "http://127.0.0.1:3000/index.php/graph";
-                BaseService.GATEWAY_NODES = "http://127.0.0.1:3000/index.php/node";
-                BaseService.GATEWAY_EDGES = "http://127.0.0.1:3000/index.php/edge";
-                BaseService.GATEWAY_USER_LOGIN = "http://127.0.0.1:3000/index.php/site/login";
+                BaseService.GATEWAY_GRAPHS = "http://php.sudo-rm-rf.ru/web/index.php/graph";
+                BaseService.GATEWAY_NODES = "http://php.sudo-rm-rf.ru/web/index.php/node";
+                BaseService.GATEWAY_EDGES = "http://php.sudo-rm-rf.ru/web/index.php/edge";
+                BaseService.GATEWAY_USER_LOGIN = "http://php.sudo-rm-rf.ru/web/index.php/site/login";
                 BaseService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http])
