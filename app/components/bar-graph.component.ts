@@ -329,20 +329,26 @@ export class BarGraphComponent
             alert("Not selected nodes!")
         } else {
 
-            this._edgeService.create(this.graph, this.edge_weight, this.selected_node_first.id, this.selected_node_second.id)
-                .then(
-                    result => {
-                        if(result){
+            if( this.selected_node_first.id == this.selected_node_second){
 
-                            this.graph.edges.push( result as Edge);
-                            this.build();
-                        } else {
+                alert("Can't create such edge!")
+            } else {
 
-                            alert("Error by creating new edge!")
-                        }
-                    },
-                    error => alert("Rejected: " + error.message)
-                )
+                this._edgeService.create(this.graph, this.edge_weight, this.selected_node_first.id, this.selected_node_second.id)
+                    .then(
+                        result => {
+                            if(result){
+
+                                this.graph.edges.push( result as Edge);
+                                this.build();
+                            } else {
+
+                                alert("Error by creating new edge!")
+                            }
+                        },
+                        error => alert("Rejected: " + error.message)
+                    )
+            }
         }
     }
 

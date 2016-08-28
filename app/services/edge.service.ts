@@ -35,11 +35,6 @@ export class EdgeService extends BaseService{
 
   delete (graph:Graph,  id:string) {
 
-    var params:{ [ key:string] : string} = {};
-
-    params["edge_id"] = id;
-      params["graph_id"] = graph.id;
-
     return this.post( this.GATEWAY + "/delete",  {
       "edge_id": id,
       "graph_id": graph.id

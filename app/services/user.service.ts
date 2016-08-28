@@ -31,7 +31,7 @@ export class UserService extends BaseService{
                 "username": username,
                 "rememberMe": rememberMe.toString()
             }
-            ,true
+            ,false
             )
             .map(res => res.json())
             .map((res) => {

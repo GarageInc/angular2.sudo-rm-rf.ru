@@ -59,7 +59,7 @@ export class GraphService extends BaseService{
 
     return this.get( this.GATEWAY+"/structure", {
       "graph_id": id
-    }  , true)
+    }  , false)
         .map( this.extractGraphStructure)
         .toPromise();
   }
@@ -70,7 +70,7 @@ export class GraphService extends BaseService{
       "graph_id": graph.id,
       "node_first_id": node_first_id,
       "node_second_id": node_second_id
-    }, true)
+    }, false)
         .map(function(res:Response){
           return res.json();
         })
