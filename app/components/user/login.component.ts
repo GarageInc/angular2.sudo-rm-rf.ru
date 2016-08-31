@@ -13,15 +13,22 @@ export class LoginComponent {
     constructor(protected userService: UserService, protected router: Router) {
     }
 
-    @Input() username:string;
+    public username:string;
 
-    @Input() password:string;
+    public password:string;
 
-    @Input() rememberme:Boolean;
+    public rememberme:Boolean;
+
+    submitted = false;
 
     onLogin() {
 
+        this.submitted = true;
+
         this.userService.login(this.username, this.password, this.rememberme).subscribe((result) => {
+
+            this.submitted = false;
+
             if ( result) {
                 this.router.navigate(['Dashboard']);
             } else {

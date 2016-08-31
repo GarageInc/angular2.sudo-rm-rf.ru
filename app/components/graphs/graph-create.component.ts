@@ -12,7 +12,7 @@ import { GraphService } from './../../services/graph.service';
 
 export class GraphCreateComponent{
 
-  @Input() name: string;
+  public graph: Graph = new Graph() ;
 
   constructor(
       protected _graphService: GraphService,
@@ -20,9 +20,14 @@ export class GraphCreateComponent{
       protected  _router:Router) {
   }
 
+  submitted = false;
 
-  onCreate(){
-    this._graphService.create( this.name).then( (result) => {
+  onCreate() {
+    this.submitted = true;
+
+    this._graphService.create( this.graph.graphname).then( (result) => {
+
+      this.submitted = false;
 
       if (result) {
         this._router.navigate(['Dashboard']);
@@ -31,4 +36,5 @@ export class GraphCreateComponent{
       }
     });
   }
+
 }

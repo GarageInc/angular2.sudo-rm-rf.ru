@@ -1,1 +1,1 @@
-{"version":3,"file":"edge.js","sourceRoot":"","sources":["edge.ts"],"names":["Edge","Edge.constructor"],"mappings":";;;;;;;;;;;;;;YAEA;gBAA0BA,wBAAcA;gBAAxCA;oBAA0BC,8BAAcA;gBAKxCA,CAACA;gBAADD,WAACA;YAADA,CAACA,AALD,EAA0B,+BAAc,EAKvC;YALD,uBAKC,CAAA"}
+{"version":3,"file":"edge.js","sourceRoot":"","sources":["edge.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;;YAEA;gBAA0B,wBAAc;gBAAxC;oBAA0B,8BAAc;gBAKxC,CAAC;gBAAD,WAAC;YAAD,CAAC,AALD,CAA0B,+BAAc,GAKvC;YALD,uBAKC,CAAA"}

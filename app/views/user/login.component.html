@@ -1,22 +1,56 @@
 <div class="row outer-center" style="margin-top: 70px;">
 
   <div class="inner-center">
+
     <h2>Login or register on one click!</h2>
 
-    <div class="form-group">
-      <label style="float: left;">Login:</label>
-      <input class="form-control" type="text" [(ngModel)]="username"/>
+    <div [hidden]="submitted">
 
+      <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+
+        <div class="form-group">
+          <label class="fl" for="login" >Login:</label>
+          <input  name="login"
+                  id="login"
+                  class="form-control"
+                  type="text"
+                  required
+                  placeholder="Login"
+                  [(ngModel)]="username"
+                  #ngLogin="ngForm"/>
+
+          <div [hidden]="ngLogin.valid"
+               class="alert alert-danger">
+            Login is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="fl" for="password">Password:</label>
+          <input name="password"
+                 id="password"
+                 required
+                 placeholder="Password"
+                 class="form-control"
+                 type="text" type="password"
+                 [(ngModel)]="password"
+                 #ngPassword="ngForm"/>
+
+          <div [hidden]="ngPassword.valid"
+               class="alert alert-danger">
+            Password is required
+          </div>
+        </div>
+
+        <div>
+          <p>{{loginForm.form.valid}}</p>
+          <button [disabled]="!loginForm.form.valid"
+                  class="btn btn-success">Go!</button>
+        </div>
+      </form>
     </div>
 
-    <div class="form-group">
-      <label style="float: left;">Password:</label>
-      <input class="form-control" type="text" type="password" [(ngModel)]="password"/>
-    </div>
-
-    <div>
-      <button class="btn btn-success" (click)="onLogin()">Go!</button>
-    </div>
 
   </div>
+
 </div>
