@@ -1,11 +1,11 @@
-System.register(['angular2/core', "../services/graph.service", "../services/node.service", "../services/edge.service", "../models/states/user.state"], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
+System.register(['angular2/core', "../services/graph.service", "../services/node.service", "../services/edge.service", "../models/states/user.state"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
+        switch (arguments.length) {
+            case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
+            case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
+            case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
+        }
     };
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
@@ -203,8 +203,8 @@ System.register(['angular2/core', "../services/graph.service", "../services/node
                     }
                     function inPath(edges_in_path, id_source, id_target) {
                         console.log(arguments);
-                        for (var _i = 0, edges_in_path_1 = edges_in_path; _i < edges_in_path_1.length; _i++) {
-                            var edge = edges_in_path_1[_i];
+                        for (var _i = 0; _i < edges_in_path.length; _i++) {
+                            var edge = edges_in_path[_i];
                             if (edge.node_first_id == id_source && edge.node_second_id == id_target
                                 || edge.node_first_id == id_target && edge.node_second_id == id_source) {
                                 return true;
@@ -371,7 +371,7 @@ System.register(['angular2/core', "../services/graph.service", "../services/node
                     __metadata('design:paramtypes', [graph_service_1.GraphService, node_service_1.NodeService, edge_service_1.EdgeService])
                 ], BarGraphComponent);
                 return BarGraphComponent;
-            }());
+            })();
             exports_1("BarGraphComponent", BarGraphComponent);
         }
     }

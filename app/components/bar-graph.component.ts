@@ -329,7 +329,8 @@ export class BarGraphComponent
             alert("Not selected nodes!")
         } else {
 
-            if( this.selected_node_first.id == this.selected_node_second.id){
+            if( this.selected_node_first.id == this.selected_node_second.id
+            ){
 
                 alert("Can't create such edge!")
             } else {

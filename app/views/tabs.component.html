@@ -1,0 +1,10 @@
+<div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li *ngFor="#tab of tabs" role="presentation"  [class.active] = "tab==selected_tab">
+            <a (click)="setSelected(tab)" style="cursor:pointer;">{{tab.title}}</a>
+        </li>
+    </ul>
+    <div *ngIf="selected_tab">
+        {{selected_tab.model}}
+    </div>
+</div>
