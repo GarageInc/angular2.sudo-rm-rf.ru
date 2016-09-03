@@ -15,6 +15,7 @@ import {ProtectedDirective} from "./protected-directive";
 import {LogoutComponent} from "./components/user/logout.component";
 import {NodeService} from "./services/node.service";
 import {EdgeService} from "./services/edge.service";
+import {TestComponent} from "./components/test.component";
 
 @Component({
   selector: 'my-app',
@@ -72,6 +73,11 @@ import {EdgeService} from "./services/edge.service";
         name: 'Profile',
        component: ProfileComponent
     }
+    ,{
+        path: '/test',
+        name: 'Test',
+        component: TestComponent,
+    },
 ])
 
 export class AppComponent {

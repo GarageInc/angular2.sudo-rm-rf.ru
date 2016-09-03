@@ -2,6 +2,8 @@ import {Directive, OnDestroy} from 'angular2/core';
 import {UserService} from './services/user.service';
 import {ROUTER_DIRECTIVES, Router, Location} from "angular2/router";
 
+// TODO выпилено за ненадобностью
+
 @Directive({
     selector: '[protected]'
 })
