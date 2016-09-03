@@ -11,7 +11,5 @@ import {
 import { HTTP_PROVIDERS } from 'angular2/http';
 
 bootstrap(AppComponent,[
-    HTTP_PROVIDERS,
-    ROUTER_PROVIDERS,
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
+    HTTP_PROVIDERS
 ]);
