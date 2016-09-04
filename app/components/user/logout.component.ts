@@ -2,7 +2,7 @@
 import {Component, Input} from 'angular2/core';
 import { Router } from 'angular2/router';
 
-import { UserService } from './../../services/user.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
     selector: 'logout',

@@ -10,7 +10,7 @@ import { GRAPHS } from '../mocks/mock-graphs';
 import {BaseService} from "./base/base.service";
 import {User} from "../models/user";
 import {UserState} from "../models/states/user.state";
-import {BaseException} from "../../node_modules/angular2/src/facade/exceptions";
+import {BaseException} from "angular2/src/facade/exceptions";
 
 @Injectable()
 export class UserService extends BaseService{

@@ -2,7 +2,7 @@ import { Component, OnInit } from 'angular2/core';
 import {Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouterLink} from 'angular2/router';
 
 import { Graph } from '../../models/graphs/graph';
-import { GraphService } from './../../services/graph.service';
+import { GraphService } from '../../services/graph.service';
 
 @Component({
   selector: 'my-graphs',

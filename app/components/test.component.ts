@@ -1,6 +1,6 @@
 import { Component, OnInit } from 'angular2/core';
 import {DataTab} from "../models/tabs/DataTab";
-import {Tabs} from "./tabs.component";
+import {Tabs} from "./tabs/tabs.component";
 
 
 @Component({
@@ -17,7 +17,6 @@ export class TestComponent implements OnInit {
   constructor(
   ){
   }
-
 
   ngOnInit() {
 

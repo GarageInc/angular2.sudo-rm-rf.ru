@@ -1,21 +1,25 @@
-import {Component, ViewEncapsulation} from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
+import {Component, ViewEncapsulation} from "angular2/core";
 
 import { DashboardComponent } from './dashboard.component';
-import { MyGraphsComponent } from './components/graphs/mygraphs.component';
-import { GraphDetailComponent } from './components/graphs/graph-detail.component';
-import { GraphCreateComponent } from './components/graphs/graph-create.component';
-import {GraphService} from "./services/graph.service";
-import {UserService} from "./services/user.service";
+import { MyGraphsComponent } from './graphs/mygraphs.component';
+import { GraphDetailComponent } from './graphs/graph-detail.component';
+import { GraphCreateComponent } from './graphs/graph-create.component';
+import {GraphService} from "../services/graph.service";
+import {UserService} from "../services/user.service";
 //
-import { LoggedInRouterOutlet } from "./logged-in-router-outlet";
-import { LoginComponent } from './components/user/login.component';
-import { ProfileComponent } from './components/user/profile.component';
-import {ProtectedDirective} from "./protected-directive";
-import {LogoutComponent} from "./components/user/logout.component";
-import {NodeService} from "./services/node.service";
-import {EdgeService} from "./services/edge.service";
-import {TestComponent} from "./components/test.component";
+import { LoggedInRouterOutlet } from "../directives/logged-in-router-outlet";
+import { LoginComponent } from './user/login.component';
+import { ProfileComponent } from './user/profile.component';
+import {ProtectedDirective} from "../directives/protected-directive";
+import {LogoutComponent} from "./user/logout.component";
+import {NodeService} from "../services/node.service";
+import {EdgeService} from "../services/edge.service";
+import {TestComponent} from "./test.component";
+
+import {MainComponent} from "./main.component";
+import {ProjectsComponent} from "./projects/projects.component";
+import {AboutComponent} from "./about/about.component";
 
 @Component({
   selector: 'my-app',
@@ -38,10 +42,20 @@ import {TestComponent} from "./components/test.component";
 
 @RouteConfig([
     {
+        path: '/about',
+        name: 'About',
+        component: AboutComponent,
+        useAsDefault: true
+    },
+    {
+        path: '/main',
+        name: 'Main',
+        component: MainComponent,
+    },
+    {
         path: '/dashboard',
         name: 'Dashboard',
         component: DashboardComponent,
-        useAsDefault: true
     },
     {
         path: '/graphs/detail/:id',
@@ -77,6 +91,11 @@ import {TestComponent} from "./components/test.component";
         path: '/test',
         name: 'Test',
         component: TestComponent,
+    }
+    ,{
+        path: '/projects',
+        name: 'Projects',
+        component: ProjectsComponent,
     },
 ])
 

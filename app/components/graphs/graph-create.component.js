@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../../models/graphs/graph', './../../services/graph.service'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', '../../models/graphs/graph', '../../services/graph.service'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
         switch (arguments.length) {

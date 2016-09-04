@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../../services/user.service'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
         switch (arguments.length) {
@@ -10,8 +10,8 @@ System.register(['angular2/core', 'angular2/router', '../../services/user.servic
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, user_service_1;
-    var LogoutComponent;
+    var core_1, router_1;
+    var MainComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -19,31 +19,26 @@ System.register(['angular2/core', 'angular2/router', '../../services/user.servic
             },
             function (router_1_1) {
                 router_1 = router_1_1;
-            },
-            function (user_service_1_1) {
-                user_service_1 = user_service_1_1;
             }],
         execute: function() {
-            LogoutComponent = (function () {
-                function LogoutComponent(userService, router) {
-                    this.userService = userService;
-                    this.router = router;
+            MainComponent = (function () {
+                function MainComponent(_router) {
+                    this._router = _router;
                 }
-                LogoutComponent.prototype.onLogout = function () {
-                    this.userService.logout();
-                    this.router.navigate(['Dashboard']);
+                MainComponent.prototype.ngOnInit = function () {
                 };
-                LogoutComponent = __decorate([
+                MainComponent = __decorate([
                     core_1.Component({
-                        selector: 'logout',
-                        templateUrl: 'app/views/user/logout.component.html'
+                        selector: 'my-main',
+                        templateUrl: 'app/views/main.component.html',
+                        styleUrls: ['app/assets/css/main.component.css']
                     }), 
-                    __metadata('design:paramtypes', [user_service_1.UserService, router_1.Router])
-                ], LogoutComponent);
-                return LogoutComponent;
+                    __metadata('design:paramtypes', [router_1.Router])
+                ], MainComponent);
+                return MainComponent;
             })();
-            exports_1("LogoutComponent", LogoutComponent);
+            exports_1("MainComponent", MainComponent);
         }
     }
 });
-//# sourceMappingURL=logout.component.js.map
+//# sourceMappingURL=main.component.js.map

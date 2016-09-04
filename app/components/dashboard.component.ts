@@ -1,10 +1,10 @@
 import { Component, OnInit } from 'angular2/core';
 import { Router } from 'angular2/router';
 
-import { Graph } from './models/graphs/graph';
-import { GraphService } from './services/graph.service';
-import {UserService} from "./services/user.service";
-import {UserState} from "./models/states/user.state";
+import { Graph } from '../models/graphs/graph';
+import { GraphService } from '../services/graph.service';
+import {UserService} from "../services/user.service";
+import {UserState} from "../models/states/user.state";
 
 @Component({
   selector: 'my-dashboard',

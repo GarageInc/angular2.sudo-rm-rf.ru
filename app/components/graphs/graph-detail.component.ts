@@ -3,10 +3,10 @@ import { RouteParams } from 'angular2/router';
 
 
 import { Graph } from '../../models/graphs/graph';
-import { GraphService } from './../../services/graph.service';
+import { GraphService } from '../../services/graph.service';
 
 import * as Moment from 'moment';
-import {BarGraphComponent} from "../bar-graph.component";
+import {BarGraphComponent} from "../../components/bar-graph.component";
 import {UserState} from "../../models/states/user.state";
 
 @Component({

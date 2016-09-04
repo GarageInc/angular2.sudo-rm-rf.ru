@@ -1,11 +1,11 @@
 
 import {Directive, Input, Output, ElementRef, Attribute, SimpleChange, Component, ViewEncapsulation} from 'angular2/core';
-import {DataTab} from "../models/tabs/DataTab";
+import {DataTab} from "../../models/tabs/DataTab";
 import {EventEmitter} from "angular2/src/facade/async";
 
 @Component({
     selector: 'tabs',
-    templateUrl: 'app/views/tabs.component.html'
+    templateUrl: 'app/views/tabs/tabs.component.html'
 })
 
 export class Tabs {

@@ -1,4 +1,4 @@
-System.register(['angular2/core', "../models/tabs/DataTab", "angular2/src/facade/async"], function(exports_1) {
+System.register(['angular2/core', "../../models/tabs/DataTab", "angular2/src/facade/async"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
         switch (arguments.length) {
@@ -44,7 +44,7 @@ System.register(['angular2/core', "../models/tabs/DataTab", "angular2/src/facade
                 Tabs = __decorate([
                     core_1.Component({
                         selector: 'tabs',
-                        templateUrl: 'app/views/tabs.component.html'
+                        templateUrl: 'app/views/tabs/tabs.component.html'
                     }), 
                     __metadata('design:paramtypes', [])
                 ], Tabs);

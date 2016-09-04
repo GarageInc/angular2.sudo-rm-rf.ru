@@ -1,10 +1,9 @@
-// logged-in-router-outlet.ts
 import {
     ElementRef, DynamicComponentLoader, AttributeMetadata, Directive, Attribute
 } from 'angular2/core';
 import { Router, RouterOutlet, ComponentInstruction } from 'angular2/router';
 
-import { UserService } from './services/user.service';
+import { UserService } from '../services/user.service';
 
 @Directive({
     selector: 'logged-in-router-outlet'
